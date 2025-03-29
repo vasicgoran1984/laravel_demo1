@@ -10,7 +10,7 @@ const axiosClient = axios.create({
 })
 
 axiosClient.interceptors.request.use(config => {
-    config.headers.Authorization = `Bearer ${store.state.user.token}`
+    config.headers.Authorization = `Bearer ${store.state.user.user.token}`
     return config;
 })
 
@@ -18,7 +18,7 @@ axiosClient.interceptors.response.use(response => {
     return response;
 }, error => {
     if (error.response.status === 401) {
-        // state.commit('setToken', null)
+        // stateUser.commit('setToken', null)
         sessionStorage.removeItem('TOKEN')
         router.push({name: 'login'})
     }

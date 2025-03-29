@@ -70,13 +70,13 @@ import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
 import {ChevronDownIcon} from "@heroicons/vue/solid";
 import store from "../store/index.js";
 import router from "../router/index.js";
-import {computed, onMounted} from "vue";
+import {computed} from "vue";
 
 const emit = defineEmits(['toggle-sidebar'])
-const currentUser = computed(() => store.state.user.data)
+const currentUser = computed(() => store.state.user.user.data)
 
 function logout() {
-    store.dispatch('logout')
+    store.dispatch('user/logout')
         .then(() => {
             router.push({name: 'login'})
         })
