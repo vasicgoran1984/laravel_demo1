@@ -10,8 +10,11 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/user', [\App\Http\Controllers\Api\AuthController::class, 'getUser']);
     Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
 
-    //Products
+    // Products
     Route::apiResource('products', \App\Http\Controllers\Api\ProductController::class);
+
+    // Users
+    Route::apiResource('users', \App\Http\Controllers\Api\UserController::class);
 });
 
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
