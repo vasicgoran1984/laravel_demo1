@@ -1,24 +1,20 @@
 <header
-    x-data="{
-        mobileMenuOpen: false,
-        cartItemsCount: {{ \App\Http\Helpers\Cart::getCartItemsCount()  }},
-    }"
-    @cart-change.window="cartItemsCount = $event.detail.count"
-    class="flex justify-between bg-slate-800 shadow-md text-white"
+    x-data="{mobileMenuOpen: false}"
+    class="flex justify-between bg-gray-600 shadow-md text-white"
 >
     <div>
         <a href="{{ route('home') }}" class="block py-navbar-item pl-5"> Logo </a>
     </div>
     <!-- Responsive Menu -->
     <div
-        class="block fixed z-10 top-0 bottom-0 height h-full w-[220px] transition-all bg-slate-900 md:hidden"
+        class="block fixed z-10 top-0 bottom-0 height h-full w-[220px] transition-all bg-gray-600 md:hidden"
         :class="mobileMenuOpen ? 'left-0' : '-left-[220px]'"
     >
         <ul>
             <li>
                 <a
-                    href="{{ route('cart.index') }}"
-                    class="relative flex items-center justify-between py-2 px-3 transition-colors hover:bg-slate-800"
+                    href="/src/cart.html"
+                    class="relative flex items-center justify-between py-2 px-3 transition-colors hover:bg-blue-500"
                 >
                     <div class="flex items-center">
                         <svg
@@ -39,9 +35,9 @@
                     </div>
                     <!-- Cart Items Counter -->
                     <small
-                        x-show="cartItemsCount"
+                        x-show="$store.header.cartItems"
                         x-transition
-                        x-text="cartItemsCount"
+                        x-text="$store.header.cartItems"
                         x-cloak
                         class="py-[2px] px-[8px] rounded-full bg-red-500"
                     ></small>
@@ -52,7 +48,7 @@
                 <li x-data="{open: false}" class="relative">
                     <a
                         @click="open = !open"
-                        class="cursor-pointer flex justify-between items-center py-2 px-3 hover:bg-slate-800"
+                        class="cursor-pointer flex justify-between items-center py-2 px-3 hover:bg-gray-800"
                     >
               <span class="flex items-center">
                 <svg
@@ -87,10 +83,10 @@
                     <ul
                         x-show="open"
                         x-transition
-                        class="z-10 right-0 bg-slate-800 py-2"
+                        class="z-10 right-0 bg-gray-600 py-2"
                     >
                         <li>
-                            <a href="/src/profile.html" class="flex px-3 py-2 hover:bg-slate-900">
+                            <a href="/src/profile.html" class="flex px-3 py-2 hover:bg-gray-700">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     class="h-5 w-5 mr-2"
@@ -108,7 +104,36 @@
                                 My Profile
                             </a>
                         </li>
-                        <li class="hover:bg-slate-900">
+                        <li>
+                            <a
+                                href="/src/watchlist.html"
+                                class="flex items-center px-3 py-2 hover:bg-gray-400"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 mr-2"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                                    />
+                                </svg>
+                                Watchlist
+
+                                <small
+                                    x-show="$store.header.watchlistItems"
+                                    x-transition
+                                    x-text="$store.header.watchlistItems"
+                                    class="py-[2px] px-[8px] rounded-full bg-red-500"
+                                ></small>
+                            </a>
+                        </li>
+                        <li class="hover:bg-gray-900">
                             <a
                                 href="/src/orders.html"
                                 class="flex items-center px-3 py-2 hover:bg-slate-900"
@@ -163,7 +188,7 @@
                 <li>
                     <a
                         href="{{ route('login') }}"
-                        class="flex items-center py-2 px-3 transition-colors hover:bg-slate-800"
+                        class="flex items-center py-2 px-3 transition-colors hover:bg-blue-500"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -198,8 +223,8 @@
         <ul class="grid grid-flow-col items-center">
             <li>
                 <a
-                    href="{{ route('cart.index') }}"
-                    class="relative inline-flex items-center py-navbar-item px-navbar-item hover:bg-slate-900"
+                    href="/src/cart.html"
+                    class="relative inline-flex items-center py-navbar-item px-navbar-item hover:bg-blue-500"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -217,10 +242,10 @@
                     </svg>
                     Cart
                     <small
-                        x-show="cartItemsCount"
+                        x-show="$store.header.cartItems"
                         x-transition
                         x-cloak
-                        x-text="cartItemsCount"
+                        x-text="$store.header.cartItems"
                         class="absolute z-[100] top-4 -right-3 py-[2px] px-[8px] rounded-full bg-red-500"
                     ></small>
                 </a>
@@ -229,7 +254,7 @@
                 <li x-data="{open: false}" class="relative">
                     <a
                         @click="open = !open"
-                        class="cursor-pointer flex items-center py-navbar-item px-navbar-item pr-5 hover:bg-slate-900"
+                        class="cursor-pointer flex items-center py-navbar-item px-navbar-item pr-5 hover:bg-blue-500"
                     >
               <span class="flex items-center">
                 <svg
@@ -266,12 +291,12 @@
                         x-show="open"
                         x-transition
                         x-cloak
-                        class="absolute z-10 right-0 bg-slate-800 py-2 w-48"
+                        class="absolute z-10 right-0 bg-gray-600 py-2 w-48"
                     >
                         <li>
                             <a
                                 href="/src/profile.html"
-                                class="flex px-3 py-2 hover:bg-slate-900"
+                                class="flex px-3 py-2 hover:bg-blue-500"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -292,8 +317,39 @@
                         </li>
                         <li>
                             <a
+                                href="/src/watchlist.html"
+                                class="flex items-center justify-between px-3 py-2 hover:bg-blue-500"
+                            >
+                                <div class="flex items-center">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 mr-2"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                                        />
+                                    </svg>
+                                    Watchlist
+                                </div>
+
+                                <small
+                                    x-show="$store.header.watchlistItems"
+                                    x-transition
+                                    x-text="$store.header.watchlistItems"
+                                    class="py-[2px] px-[8px] rounded-full bg-red-500"
+                                ></small>
+                            </a>
+                        </li>
+                        <li>
+                            <a
                                 href="/src/orders.html"
-                                class="flex px-3 py-2 hover:bg-slate-900"
+                                class="flex px-3 py-2 hover:bg-blue-500"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -317,7 +373,7 @@
                                 @csrf
 
                                 <a href="{{ route('logout') }}"
-                                   class="flex px-3 py-2 hover:bg-slate-900"
+                                   class="flex px-3 py-2 hover:bg-blue-500"
                                    onclick="event.preventDefault();
                                         this.closest('form').submit();">
                                     <svg
@@ -344,7 +400,7 @@
                 <li>
                     <a
                         href="{{ route('login') }}"
-                        class="flex items-center py-navbar-item px-navbar-item hover:bg-slate-900"
+                        class="flex items-center py-navbar-item px-navbar-item hover:bg-blue-500"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
