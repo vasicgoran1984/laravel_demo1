@@ -1,5 +1,13 @@
 <x-app-layout>
-    <div class="container mx-auto">
+    <div x-data="productItem({{
+    json_encode([
+        'id' => $product->id,
+        'image' => $product->image,
+        'title' => $product->title,
+        'price' => $product->price,
+        'addToCartUrl' => route('cart.add', $product)
+    ])
+}})" class="container mx-auto">
         <div class="grid gap-6 grid-cols-1 lg:grid-cols-5">
             <div class="lg:col-span-3">
                 <div

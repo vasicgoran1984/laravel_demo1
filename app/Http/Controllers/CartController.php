@@ -21,7 +21,7 @@ class CartController extends Controller
         $total = 0;
 
         foreach ($products as $product) {
-            $total += $product->price * $cartItems[$product->id]['product_id'];
+            $total += $product->price * $cartItems[$product->id]['quantity'];
         }
 
         return view('cart.index', compact('cartItems', 'products', 'total'));
@@ -118,7 +118,7 @@ class CartController extends Controller
         $user = $request->user();
 
         if ($user) {
-            CartItem::where(['user_id' => $user()->id, 'product_id' => $product->id])->update(['quantity' => $quantity]);
+            CartItem::where(['user_id' => $user->id, 'product_id' => $product->id])->update(['quantity' => $quantity]);
 
             return response([
                'count' => Cart::getCartItemsCount(),
