@@ -18,7 +18,6 @@ class UserController extends Controller
         $sortField = request('sort_field', 'updated_at');
         $sortDirection = request('sort_direction', 'asc');
 
-//        dd($sortField);
         $query = User::query();
         $query->orderBy($sortField, $sortDirection);
 

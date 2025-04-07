@@ -29,6 +29,6 @@ $attributeName = preg_replace('/(\w+)\[(\w+)]/', '$1.$2', $attributes['name']);
         ]) !!}>
     @endif
     @error($attributeName)
-    <small class="text-red-600"> {{ $message }}</small>
+        <small class="text-red-600"> {{ $message }}</small>
     @enderror
 </div>

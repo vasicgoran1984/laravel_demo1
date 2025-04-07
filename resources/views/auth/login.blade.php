@@ -17,28 +17,12 @@
         <x-auth-session-status class="mb-4" :status="session('status')"/>
 
         @csrf
-
         <div class="mb-4">
-            <span>
-                @if ($errors->has('email'))
-                    <span class="invalid-feedback text-red-600 mb-4">
-                        <strong>{{ $errors->first('email') }}</strong>
-                    </span>
-                @endif
-            </span>
-        </div>
-
-        <div class="mb-4">
-            <input
-                class="w-full focus:border-gray-600 focus:ring-gray-600 border-gray-300 rounded"
-                type="email" name="email" placeholder="Your email address" :value="old('email')"/>
+            <x-input type="email" name="email" placeholder="Your email address" :value="old('email')"/>
         </div>
         <div class="mb-4">
-            <input
-                class="w-full focus:border-gray-600 focus:ring-gray-600 border-gray-300 rounded"
-                type="password" name="password" placeholder="Your password" :value="old('password')" />
+            <x-input type="password" name="password" placeholder="Your password" :value="old('password')" />
         </div>
-
         <div class="flex justify-between items-center mb-5">
             <div class="flex items-center">
                 <input
