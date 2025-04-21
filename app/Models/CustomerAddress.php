@@ -30,4 +30,9 @@ class CustomerAddress extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class, 'country_code', 'code');
+    }
 }

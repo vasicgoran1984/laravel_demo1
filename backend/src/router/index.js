@@ -8,6 +8,8 @@ import store from "../store/index.js";
 import Products from "../views/Products/Products.vue";
 import NotFound from "../views/NotFound.vue";
 import Users from "../views/Users/Users.vue";
+import Orders from "../views/Orders/Orders.vue";
+import OrderView from "../views/Orders/OrderView.vue";
 
 const routes = [
     {
@@ -27,6 +29,16 @@ const routes = [
                 path: 'products',
                 name: 'app.products',
                 component: Products,
+            },
+            {
+                path: 'orders',
+                name: 'app.orders',
+                component: Orders,
+            },
+            {
+                path: 'orders/:id',
+                name: 'app.orders.view',
+                component: OrderView
             },
             {
                 path: 'users',

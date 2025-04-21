@@ -172,7 +172,6 @@ const sortDirection = ref('asc');
 
 onMounted(() => {
     getUsers();
-    console.log(users)
 })
 function getUsers(url = null) {
     store.dispatch('user/getUsers', {
