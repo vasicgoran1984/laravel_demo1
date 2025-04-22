@@ -86,7 +86,7 @@
                         active ? 'bg-gray-600 text-white' : 'text-gray-900',
                         'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                       ]"
-                                            @click=""
+                                            @click="editUser(user)"
                                         >
                                             <PencilIcon
                                                 :active="active"
@@ -164,6 +164,7 @@ import {computed, onMounted, ref} from "vue";
 import {USERS_PER_PAGE} from "../../constants.js";
 import store from "../../store/index.js";
 
+const emit = defineEmits(['clickEdit'])
 const perPage = ref(USERS_PER_PAGE);
 const search = ref('');
 const users = computed(() => store.state.user.users);
@@ -205,6 +206,9 @@ function sortUser(field) {
     getUsers();
 }
 
+function editUser(user) {
+    emit('clickEdit', user);
+}
 
 </script>
 

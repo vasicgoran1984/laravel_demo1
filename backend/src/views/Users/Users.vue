@@ -9,7 +9,7 @@
         </button>
     </div>
     <UserModal v-model="showUserModal" :user="userModel" @close="onModalClose" />
-    <UsersTable />
+    <UsersTable @clickEdit="editUser" />
 </template>
 
 
@@ -33,6 +33,14 @@ const showUserModal = ref(false);
 
 function showAddNewModal() {
     showUserModal.value = true
+}
+
+function editUser(user) {
+    store.dispatch('user/getUser', user.id)
+        .then(({data}) => {
+            userModel.value = data
+            showAddNewModal();
+        })
 }
 
 function onModalClose() {

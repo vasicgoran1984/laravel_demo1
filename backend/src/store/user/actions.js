@@ -55,6 +55,21 @@ export function createUser({commit}, user) {
     return axiosClient.post('/users', user)
 }
 
-export function updateUser() {
-    console.log('update user')
+export function getUser({}, id) {
+    return axiosClient.get(`/users/${id}`)
+}
+
+export function updateUser({commit}, user) {
+    const id = user.id;
+
+    const form = new FormData();
+    form.append('id', user.id);
+    form.append('name', user.name);
+    form.append('email', user.email);
+    form.append('password', user.password);
+    form.append('is_admin', user.is_admin ? 1 : 0);
+    form.append('_method', 'PUT');
+    user = form
+
+    return axiosClient.post(`/users/${id}`, user)
 }

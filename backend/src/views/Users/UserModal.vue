@@ -105,6 +105,7 @@ onUpdated(() => {
     user.value = {
         id: props.user.id,
         name: props.user.name,
+        email: props.user.email,
         is_admin: props.user.is_admin,
     }
 })
