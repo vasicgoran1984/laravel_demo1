@@ -6,7 +6,17 @@
             class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
         {{ prepend }}
       </span>
-            <template v-if="type === 'textarea'">
+            <template v-if="type === 'select'">
+              <select :name="name"
+                :required="required"
+                :value="props.modelValue"
+                :class="inputClasses"
+                @change="onChange($event.target.value)"
+                >
+              <option v-for="option of selectOptions" :value="option.key">{{ option.text }}</option>
+              </select>
+            </template>
+            <template v-else-if="type === 'textarea'">
       <textarea :name="name"
                 :required="required"
                 :value="props.modelValue"
@@ -27,7 +37,7 @@
                 <input :id="id"
                        :name="name"
                        :type="type"
-                       :checked="false"
+                       :checked="props.modelValue"
                        :required="required"
                        @change="emit('update:modelValue', $event.target.checked)"
                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"/>
@@ -71,7 +81,8 @@ const props = defineProps({
     append: {
         type: String,
         default: ''
-    }
+    },
+    selectOptions: Array,
 })
 
 const id = computed ( () => {
@@ -95,6 +106,12 @@ const inputClasses = computed(() => {
 })
 
 const emit = defineEmits(['update:modelValue', 'change'])
+
+function onChange(value) {
+    emit('update:modelValue', value)
+    emit('change', value)
+
+}
 
 </script>
 

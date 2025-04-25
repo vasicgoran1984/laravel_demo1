@@ -13,13 +13,15 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 
     // Products
     Route::apiResource('products', \App\Http\Controllers\Api\ProductController::class);
-
     // Users
     Route::apiResource('users', \App\Http\Controllers\Api\UserController::class);
-
-    // Users
-//    Route::apiResource('orders', \App\Http\Controllers\Api\OrderController::class);
+    // Customers
+    Route::apiResource('customers', \App\Http\Controllers\Api\CustomerController::class);
+    // Orders
     Route::get('orders', [OrderController::class, 'index']);
+
+    // Countries
+    Route::get('/countries', [\App\Http\Controllers\Api\CustomerController::class, 'countries']);
 
     // Status
     Route::get('orders/statuses', [OrderController::class, 'getStatuses']);
