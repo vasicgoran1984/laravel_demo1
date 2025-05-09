@@ -204,7 +204,7 @@ function onSubmit() {
                 loading.value = false
                 if (response.status === 200) {
                     // Show notify
-                    store.dispatch('country/getCountries')
+                    store.dispatch('customer/getCustomers')
                     closeModal()
                 }
             })
@@ -212,11 +212,11 @@ function onSubmit() {
                 console.log(err)
             })
     } else {
-        store.dispatch('createCustomer', customer.value)
+        store.dispatch('customer/createCustomer', customer.value)
             .then(response => {
                 loading.value = false
                 if (response.status === 201) {
-                    store.dispatch('country/getCountries')
+                    store.dispatch('customer/getCustomers')
                     closeModal()
                 }
             })

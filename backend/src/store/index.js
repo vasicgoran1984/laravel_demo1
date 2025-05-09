@@ -5,6 +5,7 @@ import order from './order/orderModule.js'
 import toast from './toast/toastModule.js'
 import customer from './customer/customerModule.js'
 import country from './country/countryModule.js'
+import date from './date/dateModule.js'
 
 const store = createStore({
     modules: {
@@ -14,6 +15,7 @@ const store = createStore({
         toast,
         customer,
         country,
+        date,
     }
 })
 

@@ -3,8 +3,16 @@ import './index.css';
 import store from './store'
 import router from './router'
 import App from './App.vue'
+import "./plugins/chart.js"
+import currencyUSD from "./filters/currency.js"
 
-createApp(App)
+const app = createApp(App);
+
+app
     .use(store)
     .use(router)
-    .mount('#app')
+    .mount('#app');
+
+app.config.globalProperties.$filters = {
+    currencyUSD
+}

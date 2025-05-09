@@ -23,7 +23,7 @@ export function getCustomers({commit}, {url = null, search = '', perPage = 10, s
         })
 }
 
-// Get Single Customer
+// Get Customer By ID
 export function getCustomer({commit}, id) {
     return axiosClient.get(`customers/${id}`)
 }
