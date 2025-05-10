@@ -12,6 +12,8 @@ import Orders from "../views/Orders/Orders.vue";
 import OrderView from "../views/Orders/OrderView.vue";
 import Customers from "../views/Customers/Customers.vue";
 import CustomerView from "../views/Customers/CustomerView.vue";
+import Register from "../views/Auth/Register.vue";
+import ServiceView from "../views/Service/ServiceView.vue";
 
 const routes = [
     {
@@ -57,6 +59,11 @@ const routes = [
                 name: 'app.customers.view',
                 component: CustomerView,
             },
+            {
+                path: 'service',
+                name: 'app.service.view',
+                component: ServiceView,
+            },
         ]
     },
 
@@ -67,6 +74,14 @@ const routes = [
             requiresGuest: true
         },
         component: Login,
+    },
+    {
+        path: '/register',
+        name: 'register',
+        meta: {
+            requiresGuest: true
+        },
+        component: Register,
     },
     {
         path: '/request-password',

@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('countries', function(Blueprint $table){
-            $table->dropColumn('states');
-        });
-        Schema::table('countries', function(Blueprint $table){
-            $table->json('states')->nullable();
-        });
+//        Schema::table('countries', function(Blueprint $table){
+//            $table->dropColumn('states');
+//        });
+//        Schema::table('countries', function(Blueprint $table){
+//            $table->json('states')->nullable();
+//        });
     }
 
     /**
@@ -24,11 +24,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('countries', function(Blueprint $table){
-            $table->dropColumn('states');
-        });
-        Schema::table('countries', function(Blueprint $table){
-            $table->text('states')->nullable();
-        });
+//        Schema::table('countries', function(Blueprint $table){
+//            $table->dropColumn('states');
+//        });
+//        Schema::table('countries', function(Blueprint $table){
+//            $table->text('states')->nullable();
+//        });
     }
 };

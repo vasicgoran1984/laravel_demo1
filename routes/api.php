@@ -3,10 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\ServiceController;
 
 //Route::get('/user', function (Request $request) {
 //    return $request->user();
 //})->middleware('auth:sanctum');
+
+// Register New User
+Route::post('/register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/user', [\App\Http\Controllers\Api\AuthController::class, 'getUser']);
@@ -37,6 +41,17 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/dashboard/orders-by-country', [DashboardController::class, 'ordersByCountry']);
     Route::get('/dashboard/latest-customers', [DashboardController::class, 'latestCustomers']);
     Route::get('/dashboard/latest-orders', [DashboardController::class, 'latestOrders']);
+
+
+
+
+    /***************************************************************************************************
+     * New Api
+     **************************************************************************************************/
+
+    // Service
+    Route::apiResource('service', \App\Http\Controllers\Api\ServiceController::class);
+    Route::get('/service/service-id/{id}', [ServiceController::class, 'serviceByServiceId']);
 });
 
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);

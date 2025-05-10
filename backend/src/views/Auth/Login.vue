@@ -1,5 +1,5 @@
 <template>
-    <GuestLayout title="Sign in to you account">
+    <GuestLayout title="Prijava">
     <form class="mt-8 space-y-6" method="POST" @submit.prevent="login">
         <div v-if="errorMsg" class="flex items-center justify-between py-3 px-5 bg-red-500 text-white rounded">
             {{errorMsg}}
@@ -88,10 +88,18 @@
                 <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               <LockClosedIcon class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true"/>
             </span>
-                Sign in
+                Prijava
             </button>
         </div>
     </form>
+        <div class="flex items-center justify-between">
+            <div class="text-sm">
+                <router-link :to="{name: 'register'}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    Registruj Novog Korisnika
+                </router-link>
+            </div>
+        </div>
+
     </GuestLayout>
 </template>
 <script setup>

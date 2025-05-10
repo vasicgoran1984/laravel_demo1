@@ -35,7 +35,6 @@ function toggleSidebar() {
 
 onMounted(() => {
     store.dispatch('user/getCurrentUser')
-    store.dispatch('country/getCountries')
     handleSidebarOpened()
     window.addEventListener('resize', handleSidebarOpened)
 })

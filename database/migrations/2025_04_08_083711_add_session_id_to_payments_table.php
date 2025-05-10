@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('payments', function (Blueprint $table) {
-            $table->string('session_id', 255)->nullable();
-        });
+//        Schema::table('payments', function (Blueprint $table) {
+//            $table->string('session_id', 255)->nullable();
+//        });
     }
 
     /**
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('payments', function (Blueprint $table) {
-            $table->dropColumn('session_id');
-        });
+//        Schema::table('payments', function (Blueprint $table) {
+//            $table->dropColumn('session_id');
+//        });
     }
 };
