@@ -7,6 +7,9 @@ export function createCar({commit}, car) {
 
 // Get All Cars
 export function getCars({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction} = {}) {
+    if (sort_field === 'updated_at') {
+        sort_field = 'id';
+    }
     commit('setCars', [true])
 
     url = url || '/cars';

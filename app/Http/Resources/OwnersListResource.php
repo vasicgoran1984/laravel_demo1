@@ -22,6 +22,7 @@ class OwnersListResource extends JsonResource
             'address'    => $this->address,
             'phone'      => $this->phone,
             'email'      => $this->email,
+            'car_owner'  => $this->carOwners,
             'created_at' => (new \DateTime($this->created_at))->format('Y-m-d H:i:s'),
         ];
     }

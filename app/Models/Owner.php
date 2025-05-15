@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Owner extends Model
 {
@@ -15,5 +16,10 @@ class Owner extends Model
         'phone',
         'email',
     ];
+
+    public function carOwners(): HasMany
+    {
+        return $this->hasMany(CarOwner::class);
+    }
 
 }

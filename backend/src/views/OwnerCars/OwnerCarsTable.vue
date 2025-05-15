@@ -54,7 +54,7 @@
             <tbody v-else>
             <tr v-for="owner of owners.data" class="hover:bg-gray-100">
                 <td class="border-b p-2">{{owner.id}}</td>
-
+                {{owner.car_owner}}
                 <td class="border-b p-2">
                     {{owner.first_name}} {{owner.last_name}}
                 </td>
@@ -140,6 +140,8 @@ const showModal = ref(false);
 
 onMounted(() => {
     getOwners();
+
+    console.log(owners)
 })
 
 const DEFAULT_EMPTY_OWNER = {
