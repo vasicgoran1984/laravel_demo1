@@ -1,19 +1,19 @@
-import * as serviceMutations from './mutations.js'
-import * as serviceActions from './actions.js'
+import * as producerMutations from './mutations.js'
+import * as producerActions from './actions.js'
 
-const serviceModule = {
+const producerModule = {
     namespaced: true,
     state: () => (
         {
-            service: {
+            producer: {
                 loading: false,
                 data: [],
             }
         }
     ),
-    mutations: serviceMutations,
-    actions: serviceActions,
+    mutations: producerMutations,
+    actions: producerActions,
 
 }
 
-export default serviceModule
+export default producerModule

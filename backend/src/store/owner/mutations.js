@@ -1,6 +1,6 @@
-export function setCars(state, [loading, response = null]) {
+export function setOwners(state, [loading, response = null]) {
     if (response) {
-        state.car = {
+        state.owner = {
             data: response.data,
             links: response.meta.links,
             total: response.meta.total,
@@ -10,6 +10,6 @@ export function setCars(state, [loading, response = null]) {
             page: response.meta.current_page,
         }
     }
-    state.car.loading = loading;
+    state.owner.loading = loading;
 
 }

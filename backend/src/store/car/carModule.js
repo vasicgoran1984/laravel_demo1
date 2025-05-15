@@ -1,19 +1,25 @@
-import * as producerMutations from './mutations.js'
-import * as producerActions from './actions.js'
+import * as carMutations from './mutations.js'
+import * as carActions from './actions.js'
 
-const producerModule = {
+const carModule = {
     namespaced: true,
     state: () => (
         {
-            producer: {
+            car: {
                 loading: false,
                 data: [],
+                links: [],
+                from: null,
+                to: null,
+                page: 1,
+                limit: null,
+                total: null,
             }
         }
     ),
-    mutations: producerMutations,
-    actions: producerActions,
+    mutations: carMutations,
+    actions: carActions,
 
 }
 
-export default producerModule
+export default carModule

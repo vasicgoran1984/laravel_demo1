@@ -51,7 +51,6 @@ const title = ref('');
 const service_title = ref('');
 const loading = ref(false);
 const user = store.state.user.user.data;
-const ser = store.state.service.service.data;
 
 const service = ref({
     id: '',

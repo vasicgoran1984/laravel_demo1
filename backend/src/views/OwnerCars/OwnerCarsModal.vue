@@ -34,7 +34,7 @@
 
               <header class="py-3 px-4 flex justify-between items-center">
                 <DialogTitle as="h3" class="text-lg leading-6 font-medium text-gray-900">
-                  {{ product.id ? `Update product: "${props.product.title}"` : 'Create new Product' }}
+                    {{owner.id ? `Dodaj vozilo za: ${props.owner.first_name} ${props.owner.last_name}`  : 'Vlasnik nije pronadjen!'}}
                 </DialogTitle>
                 <button
                   @click="closeModal"
@@ -57,11 +57,10 @@
               </header>
               <form @submit.prevent="onSubmit">
                 <div class="bg-white px-4 pt-5 pb-4">
-                  <CustomInput class="mb-2" v-model="product.title" label="Product Title" :errors="errors['title']" />
-                  <CustomInput type="file" class="mb-2" label="Product Image" @change="file => product.image = file"/>
-                  <CustomInput type="textarea" class="mb-2" v-model="product.description" label="Description"/>
-                  <CustomInput type="number" class="mb-2" v-model="product.price" label="Price" prepend="$"/>
-                  <CustomInput type="checkbox" class="mb-2" v-model="product.published" label="Published" />
+<!--                  <CustomInput class="mb-2" label="Traži vozilo...." />-->
+
+<!--                    <Combobox />-->
+
                 </div>
                 <footer class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                   <button type="submit"
@@ -94,27 +93,27 @@ import {
 } from '@headlessui/vue'
 import Spinner from "../../components/core/Spinner.vue";
 import store from "../../store/index";
-import CustomInput from "../../components/core/CustomInput.vue";
+import CustomInput from "../../components/core/CustomImput.vue";
+import Combobox from "../../components/core/Table/Combobox.vue";
 
 const loading = ref(false);
 const errors = ref({});
 
+
 const props = defineProps({
-  modelValue: Boolean,
-  product: {
-    required: true,
-    type: Object,
-  }
+    modelValue: Boolean,
+    owner: {
+        required: true,
+        type: Object,
+    }
 })
 
-const product = ref({
-  id: props.product.id,
-  title: props.product.title,
-  image: props.product.image,
-  description: props.product.description,
-  price: props.product.price,
-  published: props.product.published,
+const owner = ref({
+    id: props.owner.id,
+    last_name: props.owner.first_name,
+    first_name: props.owner.last_name,
 });
+
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -124,47 +123,21 @@ const show = computed({
 })
 
 onUpdated(() => {
-  product.value = {
-    id: props.product.id,
-    title: props.product.title,
-    image: props.product.image,
-    description: props.product.description,
-    price: props.product.price,
-    published: props.product.published,
-  }
+  console.log('update')
+    owner.value = {
+        id: props.owner.id,
+        last_name: props.owner.first_name,
+        first_name: props.owner.last_name,
+    }
 })
 
 function closeModal() {
   show.value = false
-  emit('close')
 }
 
 function onSubmit() {
   loading.value = true;
-  if (product.value.id) {
-    store.dispatch('updateProduct', product.value)
-      .then(response => {
-        loading.value = false
-        if (response.status === 200) {
-          // Show notify
-          store.dispatch('getProducts')
-          closeModal()
-        }
-      })
-  } else {
-    store.dispatch('createProduct', product.value)
-      .then(response => {
-        loading.value = false
-        if (response.status === 201) {
-          store.dispatch('getProducts')
-          closeModal()
-        }
-      })
-      .catch(({ response }) => {
-        loading.value = false;
-        errors.value = response.data.errors
-      })
-  }
+  console.log('submit');
 }
 
 </script>

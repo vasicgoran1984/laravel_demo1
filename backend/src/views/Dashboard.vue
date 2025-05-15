@@ -1,18 +1,38 @@
 <template>
-  <div class="mb-2 flex items-center justify-between">
-      <div class="bg-gray-100 px-4 pt-5 pb-4 py-2">
-          <div v-if="!loading.serviceName" >
-              <h1 class="text-3xl font-semibold">{{service.name_service}}</h1>
-              <span>{{service.city}}</span>
-          </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
+        <div class="animate-fade-in-down bg-white rounded-lg shadow flex flex-col items-center justify-center" style="animation-delay: 0.1s">
+            <router-link :to="{name: 'app.producer.view'}" class="flex items-center w-full h-full rounded-lg justify-center transition-colors hover:text-white hover:bg-gray-500">
+                <span class="text-3xl">
+                    Vozilo
+              </span>
+            </router-link>
+        </div>
 
-          <div v-else>
-              <Spinner class="text-3xl font-semibold" text="" />
-          </div>
+        <div class="animate-fade-in-down bg-white rounded-lg shadow flex flex-col items-center justify-center" style="animation-delay: 0.2s">
+            <router-link :to="{name: 'app.owners.view'}" class="flex items-center w-full h-full rounded-lg justify-center transition-colors hover:text-white hover:bg-gray-500">
+                <span class="text-3xl">
+                    Vlasnik
+              </span>
+            </router-link>
+        </div>
 
-      </div>
+        <div class="animate-fade-in-down bg-white rounded-lg shadow flex flex-col items-center justify-center" style="animation-delay: 0.3s">
+            <router-link :to="{name: 'app.orders'}" class="py-10 flex items-center w-full h-full rounded-lg justify-center transition-colors hover:text-white hover:bg-gray-500">
+                <span class="text-3xl">
+                    Nalog
+              </span>
+            </router-link>
+        </div>
 
-  </div>
+        <div class="animate-fade-in-down bg-white rounded-lg shadow flex flex-col items-center justify-center" style="animation-delay: 0.3s">
+            <router-link :to="{name: 'app.orders'}" class="py-10 flex items-center w-full h-full rounded-lg justify-center transition-colors hover:text-white hover:bg-gray-500">
+                <span class="text-3xl">
+                    Servis
+              </span>
+            </router-link>
+        </div>
+
+    </div>
 
 </template>
 
@@ -26,6 +46,7 @@ import Spinner from "../components/core/Spinner.vue";
 import {UserIcon} from "@heroicons/vue/outline";
 import CustomInput from "../components/core/CustomImput.vue";
 import store from "../store/index.js";
+import {ViewListIcon} from "@heroicons/vue/solid";
 
 Chart.register(BarController, CategoryScale, LinearScale, BarElement, DoughnutController, ArcElement)
 

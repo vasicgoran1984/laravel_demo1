@@ -1,14 +1,14 @@
 import axiosClient from "../../axios.js";
 
-// Create New Car
-export function createCar({commit}, car) {
-    return axiosClient.post('/cars', car)
+// Create New Owner
+export function createOwner({commit}, owner) {
+    return axiosClient.post('/owners', owner)
 }
 
-export function getCars({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction} = {}) {
-    commit('setCars', [true])
+export function getOwners({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction} = {}) {
+    commit('setOwners', [true])
 
-    url = url || '/cars';
+    url = url || '/owners';
 
     return axiosClient.get(url, {
         params: {
@@ -19,9 +19,13 @@ export function getCars({commit}, {url = null, search = '', perPage = 10, sort_f
         }
     })
         .then(res => {
-            commit('setCars', [false, res.data])
+            commit('setOwners', [false, res.data])
         })
         .catch(() => {
-            commit('setCars', [false])
+            commit('setOwners', [false])
         })
+}
+
+export function getOwner({commit}, id) {
+    return axiosClient.get(`/owners/${id}`)
 }

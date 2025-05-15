@@ -1,9 +1,9 @@
-export function setService(state, [loading, response = null]) {
+export function setProducer(state, [loading, response = null]) {
     if (response) {
-        state.service = {
+        state.producer = {
             data: response,
         }
     }
-    state.service.loading = loading;
+    state.producer.loading = loading;
 
 }

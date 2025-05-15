@@ -28,7 +28,7 @@
 const { text } = defineProps({
   text: {
     type: String,
-    default: 'Please Wait...'
+    default: 'Učitavam...'
   },
   class: {
     type: String,

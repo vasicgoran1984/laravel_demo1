@@ -1,11 +1,12 @@
 import axiosClient from "../../axios.js";
 
-// Get Producer By ID
-export function getProducers({commit}) {
-    commit('setProducer', [true])
+// Get Type By Producer ID
+export function getTypeByProducerId({commit}, id) {
+    commit('setType', [true])
 
-    return axiosClient.get(`producer`)
+    return axiosClient.get(`type/${id}`)
         .then(res => {
-            commit('setProducer', [false, res.data])
+            commit('setType', [false, res.data])
         })
 }
+

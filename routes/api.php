@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\ServiceController;
+use App\Http\Controllers\Api\TypeController;
+
 
 //Route::get('/user', function (Request $request) {
 //    return $request->user();
@@ -49,9 +51,34 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
      * New Api
      **************************************************************************************************/
 
+    // Get Porducer/Type
+    Route::get('/producer-type/{id}', [TypeController::class, 'getProducerType']);
+
     // Service
     Route::apiResource('service', \App\Http\Controllers\Api\ServiceController::class);
     Route::get('/service/service-id/{id}', [ServiceController::class, 'serviceByServiceId']);
+
+    // Producer
+    Route::apiResource('producer', \App\Http\Controllers\Api\ProducerController::class);
+
+    // Type
+    Route::get('type/{id}', [TypeController::class, 'index']);
+
+    // Car
+    Route::apiResource('cars', \App\Http\Controllers\Api\CarController::class);
+
+    // Car
+    Route::apiResource('owners', \App\Http\Controllers\Api\OwnerController::class);
+
+    // Show All Cars
+    Route::get('/show-all-cars', [\App\Http\Controllers\Api\CarController::class, 'showAllCars']);
+
+    // Get Cars To Add Owner
+    Route::get('/get-cars-to-add-owner', [\App\Http\Controllers\Api\CarController::class, 'getCarsToAddOwner']);
+
+    // Owner Cars
+    Route::apiResource('ownerCars', \App\Http\Controllers\Api\CarOwnerController::class);
+
 });
 
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);

@@ -1,25 +1,25 @@
-import * as ownerMutations from './mutations.js'
-import * as ownerActions from './actions.js'
+import * as ownerCarsMutations from './mutations.js'
+import * as ownerCarsActions from './actions.js'
 
-const workOrderModule = {
+const ownerCarsModule = {
     namespaced: true,
     state: () => (
         {
-            owner: {
+            ownerCars: {
                 loading: false,
                 data: [],
-                links: [],
-                from: null,
-                to: null,
-                page: 1,
-                limit: null,
-                total: null,
+                // links: [],
+                // from: null,
+                // to: null,
+                // page: 1,
+                // limit: null,
+                // total: null,
             }
         }
     ),
-    mutations: ownerMutations,
-    actions: ownerActions,
+    mutations: ownerCarsMutations,
+    actions: ownerCarsActions,
 
 }
 
-export default workOrderModule
+export default ownerCarsModule

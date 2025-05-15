@@ -9,53 +9,17 @@
 
     <div class="animate-fade-in-down z-9">
         <div class="bg-white px-4 pt-5 pb-4 py-2 mt-2">
-            <h1 class="text-2xl font-semibold pb-2">Unesi Vozilo</h1>
+            <h1 class="text-2xl font-semibold pb-2">Unesi Vlasnika</h1>
             <form @submit.prevent="onSubmit">
                 <div class="bg-white px-4 pt-5 pb-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <CustomInput class="mb-2" disabled v-model="producer" />
-                        <CustomInput class="mb-2" disabled v-model="type" />
-                        <CustomInput class="mb-2" hidden v-model="car.type_id" />
-                        <CustomInput class="mb-2" v-model="car.chassis_number" :errors="errors['chassis_number']" label="Broj Šasije" />
-                        <CustomInput class="mb-2" v-model="car.engine_number" :errors="errors['engine_number']" label="Broj Motora"/>
-                        <CustomInput class="mb-2" v-model="car.plate_number" :errors="errors['plate_number']" label="Broj Tablica"/>
-<!--                        <CustomInput class="mb-2" v-model="car.volume" label="Zapremina Motora"/>-->
+                        <CustomInput class="mb-2" v-model="owner.first_name" :errors="errors['first_name']" label="Ime" />
+                        <CustomInput class="mb-2" v-model="owner.last_name" :errors="errors['last_name']" label="Prezime"/>
+                        <CustomInput class="mb-2" v-model="owner.city" :errors="errors['city']" label="Grad"/>
+                        <CustomInput class="mb-2" v-model="owner.address" :errors="errors['address']" label="Adresa"/>
+                        <CustomInput class="mb-2" v-model="owner.phone" :errors="errors['phone']" label="Telefon"/>
+                        <CustomInput class="mb-2" v-model="owner.email" :errors="errors['email']" label="Email"/>
 
-                        <div class="mt-1">
-                            <select class="items-center text-gray-500 text-sm block rounded-md w-full bg-white px-3 py-2 border border-gray-300 focus:z-10 sm:text-sm"
-                                    v-model="car.volume">
-                                <option value="" disabled selected>Zapremina Motora</option>
-                                <option v-for="volume in volumeList" :value=volume.id>
-                                    {{ volume.name }}
-                                </option>
-                            </select>
-                            <small v-if="errors['volume']" class="text-red-600">{{errors['volume']}}</small>
-                        </div>
-
-                        <CustomInput class="mb-2" v-model="car.power" :errors="errors['power']" label="Snaga Motora"/>
-                        <CustomInput class="mb-2" v-model="car.year" :errors="errors['year']" label="Godina"/>
-
-                        <div>
-                            <select class="block text-gray-500 rounded-md w-full bg-white px-3 py-2 border border-gray-300 focus:z-10 sm:text-sm"
-                                    v-model="car.transmission_id">
-                                <option value="" disabled selected>Transmisija</option>
-                                <option v-for="transmission in transmissionsList" :value=transmission.id>
-                                    {{ transmission.name }}
-                                </option>
-                            </select>
-                            <small v-if="errors['transmission']" class="text-red-600">{{errors['transmission']}}</small>
-                        </div>
-
-                        <div>
-                            <select class="block text-gray-500 rounded-md w-full bg-white px-3 py-2 border border-gray-300 focus:z-10 sm:text-sm"
-                                    v-model="car.fuel_id">
-                                <option value="" disabled selected>Gorivo</option>
-                                <option v-for="fuel in fuelsList" :value=fuel.id>
-                                    {{ fuel.name }}
-                                </option>
-                            </select>
-                            <small v-if="errors['fuel']" class="text-red-600">{{errors['fuel']}}</small>
-                        </div>
 
                     </div>
                 </div>
@@ -91,126 +55,66 @@ const producer = ref('');
 const type = ref('');
 const errors = ref({});
 
-const car = {
-    type_id: '',
-    transmission_id: '',
-    fuel_id: '',
-    chassis_number: '',
-    engine_number: '',
-    year: '',
-    plate_number: '',
-    volume: '',
-    power: '',
+const owner = {
+    first_name: '',
+    last_name: '',
+    city: '',
+    address: '',
+    phone: '',
+    email: '',
 }
 
-const transmissionsList = [
-    {
-        id: '1',
-        name: 'Manuelni'
-    },
-    {
-        id: '2',
-        name: 'Automatik'
-    }
-]
-
-const fuelsList = [
-    {
-        id: '1',
-        name: 'Dizel'
-    },
-    {
-        id: '2',
-        name: 'Benzin'
-    },
-    {
-        id: '3',
-        name: 'Plin'
-    },
-    {
-        id: '4',
-        name: 'Hibrid'
-    },
-    {
-        id: '5',
-        name: 'Elektro'
-    }
-]
-
-onMounted(() => {
-    // Get Type
-    store.dispatch('producer/getProducerType', route.params.id)
-        .then(({data}) => {
-            // console.log(data)
-            car.type_id = data.type_id;
-            producer.value = data.producer_name;
-            type.value     = data.type_name;
-        })
-})
 
 function onSubmit() {
 
-    store.dispatch('car/createCar', car)
+    store.dispatch('owner/createOwner', owner)
         .then(response => {
             router.push({name: 'app.dashboard'})
-            store.commit('toast/showToast', `Novo vozilo "${producer.value}  ${type.value} Kreirano"!`)
+            store.commit('toast/showToast', `Novi korisnik "${owner.first_name}  ${owner.last_name} kreiran"!`)
         })
         .catch(({ response }) => {
-            // Chassis Number
-            if (response.data.errors.chassis_number) {
-                response.data.errors.chassis_number[0] = 'Broj Šasije je obavezno polje!'
+            // First Name
+            if (response.data.errors.first_name) {
+                response.data.errors.first_name[0] = 'Ime je Obavezno polje!'
             } else {
-                response.data.errors.chassis_number = '';
+                response.data.errors.first_name = '';
             }
 
-            // Engine Number
-            if (response.data.errors.engine_number) {
-                response.data.errors.engine_number[0] = 'Broj Motora je obavezno polje!'
+            // Last Name
+            if (response.data.errors.last_name) {
+                response.data.errors.last_name[0] = 'Prezime je Obavezno polje!'
             } else {
-                response.data.errors.engine_number = '';
+                response.data.errors.last_name = '';
             }
 
-            // Plate Number
-            if (response.data.errors.plate_number) {
-                response.data.errors.plate_number[0] = 'Broj Tablice je obavezno polje!'
+            // First Name
+            if (response.data.errors.city) {
+                response.data.errors.city[0] = 'Grad je Obavezno polje!'
             } else {
-                response.data.errors.plate_number = '';
+                response.data.errors.city = '';
             }
 
-            // Volume
-            if (response.data.errors.volume) {
-                response.data.errors.volume = 'Zapremina je obavezno polje!'
+            // First Name
+            if (response.data.errors.address) {
+                response.data.errors.address[0] = 'Adresa je Obavezno polje!'
             } else {
-                response.data.errors.volume = '';
+                response.data.errors.address = '';
             }
 
-            // Power
-            if (response.data.errors.power) {
-                response.data.errors.power[0] = 'Snaga Motora je obavezno polje!'
+            // First Name
+            if (response.data.errors.phone) {
+                response.data.errors.phone[0] = 'Telefon je Obavezno polje!'
             } else {
-                response.data.errors.power = '';
+                response.data.errors.phone = '';
             }
 
-            // Year
-            if (response.data.errors.year) {
-                response.data.errors.year[0] = 'Godina je obavezno polje!'
+            // First Name
+            if (response.data.errors.email) {
+                response.data.errors.email[0] = 'Email je Obavezno polje!'
             } else {
-                response.data.errors.year = '';
+                response.data.errors.email = '';
             }
 
-            // Transmission
-            if (response.data.errors.transmission_id) {
-                response.data.errors.transmission = 'Transmisija je obavezno polje!';
-            } else {
-                response.data.errors.transmission = '';
-            }
-
-            // Fuel
-            if (response.data.errors.fuel_id) {
-                response.data.errors.fuel = 'Gorivo je obavezno polje!';
-            } else {
-                response.data.errors.fuel = '';
-            }
             errors.value = response.data.errors
         })
 

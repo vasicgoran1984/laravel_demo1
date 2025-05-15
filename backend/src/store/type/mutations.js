@@ -1,9 +1,9 @@
-export function setProducer(state, [loading, response = null]) {
+export function setType(state, [loading, response = null]) {
     if (response) {
-        state.producer = {
+        state.type = {
             data: response,
         }
     }
-    state.producer.loading = loading;
+    state.type.loading = loading;
 
 }

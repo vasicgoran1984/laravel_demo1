@@ -1,11 +1,11 @@
-import * as carMutations from './mutations.js'
-import * as carActions from './actions.js'
+import * as ownerMutations from './mutations.js'
+import * as ownerActions from './actions.js'
 
-const carModule = {
+const ownerModule = {
     namespaced: true,
     state: () => (
         {
-            car: {
+            owner: {
                 loading: false,
                 data: [],
                 links: [],
@@ -17,9 +17,9 @@ const carModule = {
             }
         }
     ),
-    mutations: carMutations,
-    actions: carActions,
+    mutations: ownerMutations,
+    actions: ownerActions,
 
 }
 
-export default carModule
+export default ownerModule

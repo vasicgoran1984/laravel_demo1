@@ -14,6 +14,14 @@ import Customers from "../views/Customers/Customers.vue";
 import CustomerView from "../views/Customers/CustomerView.vue";
 import Register from "../views/Auth/Register.vue";
 import ServiceView from "../views/Service/ServiceView.vue";
+import ProducerView from "../views/Producer/ProducerView.vue";
+import TypeView from "../views/Type/TypeView.vue";
+import CarView from "../views/Car/CarView.vue";
+import Cars from "../views/Car/Cars.vue";
+import OwnerView from "../views/Owner/OwnerView.vue";
+import Owners from "../views/Owner/Owners.vue";
+import OwnerCars from "../views/OwnerCars/OwnerCars.vue";
+import AddCarOwner from "../views/OwnerCars/AddCarOwner.vue";
 
 const routes = [
     {
@@ -63,6 +71,46 @@ const routes = [
                 path: 'service',
                 name: 'app.service.view',
                 component: ServiceView,
+            },
+            {
+                path: 'producer',
+                name: 'app.producer.view',
+                component: ProducerView,
+            },
+            {
+                path: 'type/:id',
+                name: 'app.type.view',
+                component: TypeView,
+            },
+            {
+                path: 'car/:id',
+                name: 'app.car.view',
+                component: CarView,
+            },
+            {
+                path: 'cars',
+                name: 'app.cars',
+                component: Cars,
+            },
+            {
+                path: 'owner',
+                name: 'app.owners.view',
+                component: OwnerView,
+            },
+            {
+                path: 'owners',
+                name: 'app.owners',
+                component: Owners,
+            },
+            {
+                path: 'ownerCars',
+                name: 'app.owner.cars',
+                component: OwnerCars,
+            },
+            {
+                path: 'addCarOwner/:id',
+                name: 'app.addCarOwner.view',
+                component: AddCarOwner,
             },
         ]
     },

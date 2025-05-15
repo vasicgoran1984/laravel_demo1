@@ -40,7 +40,7 @@
                                  :sort-field="sortField" :sort-direction="sortDirection">E-mail
                 </TableHeaderCell>
                 <TableHeaderCell field="actions">
-                    Izmijeni Vozilo
+                    Dodaj Vozilo
                 </TableHeaderCell>
             </tr>
             </thead>
@@ -52,7 +52,7 @@
             </tr>
             </tbody>
             <tbody v-else>
-            <tr v-for="owner of owners.data">
+            <tr v-for="owner of owners.data" class="hover:bg-gray-100">
                 <td class="border-b p-2">{{owner.id}}</td>
 
                 <td class="border-b p-2">
@@ -71,12 +71,17 @@
                     {{owner.email}}
                 </td>
                 <td class="border-b p-2">
-                    <button
-                        :class="['group flex w-full items-center rounded-md px-2 py-2 text-sm']"
-                        @click="editOwner(owner.id)">
-                        <PencilIcon class="mr-2 h-5 w-5 text-indigo-400" aria-hidden="true"/>
-                        Izmijeni
-                    </button>
+<!--                    <button-->
+<!--                        :class="['group flex w-full items-center rounded-md px-2 py-2 text-sm']"-->
+<!--                        @click="addCar(owner)">-->
+<!--                        <PlusIcon class="mr-2 h-5 w-5 text-gray-800" aria-hidden="true"/>-->
+<!--                        <b>Dodaj</b>-->
+<!--                    </button>-->
+                    <router-link :to="{name: 'app.addCarOwner.view', params: {id: owner.id}}" class="['group flex w-full items-center rounded-md px-2 py-2 text-sm']">
+                        <PlusIcon class="mr-2 h-5 w-5 text-gray-800" aria-hidden="true"/>
+                            <b>Dodaj Vozilo</b>
+                    </router-link>
+
                 </td>
             </tr>
             </tbody>
@@ -113,6 +118,7 @@
             </nav>
         </div>
     </div>
+    <OwnerCarsModal v-model="showModal" :owner="ownerModel" @close="onModalClose" />
 </template>
 
 <script setup>
@@ -120,8 +126,9 @@ import store from "../../store/index.js";
 import {computed, onMounted, ref} from "vue";
 import {OWNERS_PER_PAGE} from "../../constants.js";
 import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
-import {DotsVerticalIcon, PencilIcon, TrashIcon} from '@heroicons/vue/outline'
+import {DotsVerticalIcon, PencilIcon, TrashIcon, PlusIcon} from '@heroicons/vue/outline'
 import Spinner from "../../components/core/Spinner.vue";
+import OwnerCarsModal from "./OwnerCarsModal.vue";
 
 const perPage = ref(OWNERS_PER_PAGE);
 const search = ref('');
@@ -129,12 +136,18 @@ const sortField = ref('updated_at');
 const sortDirection = ref('asc');
 
 const owners = computed(() => store.state.owner.owner);
+const showModal = ref(false);
 
 onMounted(() => {
     getOwners();
 })
 
-// Get All Cars
+const DEFAULT_EMPTY_OWNER = {
+    id: '',
+}
+const ownerModel = ref({...DEFAULT_EMPTY_OWNER})
+
+// Get All Owners
 function getOwners(url = null) {
     store.dispatch('owner/getOwners', {
         url,
@@ -168,9 +181,23 @@ function sortOwner(field) {
     getOwners();
 }
 
-function editOwner(owner) {
-    console.log(owner)
+function showOwnerModal() {
+    showModal.value = true;
 }
+
+function addCar(owner) {
+    store.dispatch('owner/getOwner', owner.id)
+        .then(({data}) => {
+            ownerModel.value = data
+            showOwnerModal()
+        })
+}
+
+function onModalClose() {
+    console.log('modal close')
+}
+
+
 </script>
 
 

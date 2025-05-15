@@ -1,9 +1,15 @@
-export function setProducer(state, [loading, response = null]) {
+export function setCars(state, [loading, response = null]) {
     if (response) {
-        state.producer = {
-            data: response,
+        state.car = {
+            data: response.data,
+            links: response.meta.links,
+            total: response.meta.total,
+            limit: response.meta.per_page,
+            from: response.meta.from,
+            to: response.meta.to,
+            page: response.meta.current_page,
         }
     }
-    state.producer.loading = loading;
+    state.car.loading = loading;
 
 }

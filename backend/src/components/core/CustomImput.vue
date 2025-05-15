@@ -2,10 +2,10 @@
     <div>
         <label class="sr-only">{{ label }}</label>
         <div class="mt-1 flex rounded-md shadow-sm">
-      <span v-if="prepend"
-            class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-        {{ prepend }}
-      </span>
+          <span v-if="prepend"
+                class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+            {{ prepend }}
+          </span>
             <template v-if="type === 'select'">
               <select :name="name"
                 :required="required"
@@ -17,7 +17,7 @@
               </select>
             </template>
             <template v-else-if="type === 'textarea'">
-      <textarea :name="name"
+            <textarea :name="name"
                 :required="required"
                 :value="props.modelValue"
                 @input="emit('update:modelValue', $event.target.value)"
@@ -48,16 +48,18 @@
                        :name="name"
                        :required="required"
                        :value="props.modelValue"
+                       :disabled="disabled"
                        @input="emit('update:modelValue', $event.target.value)"
                        :class="inputClasses"
                        :placeholder="label"
                        step="0.01"/>
             </template>
-            <span v-if="append"
-                  class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-        {{ append }}
-      </span>
+                <span v-if="append"
+                      class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+            {{ append }}
+          </span>
         </div>
+        <small v-if="errors && errors[0]" class="text-red-600">{{ errors[0] }}</small>
     </div>
 </template>
 
@@ -83,6 +85,11 @@ const props = defineProps({
         default: ''
     },
     selectOptions: Array,
+    disabled: Boolean,
+    errors: {
+        type: Array,
+        required: false
+    },
 })
 
 const id = computed ( () => {
@@ -102,6 +109,9 @@ const inputClasses = computed(() => {
     } else if (!props.prepend && !props.append) {
         cls.push('rounded-md')
     }
+    // if (props.errors && props.errors[0]) {
+    //     cls.push('border-red-600 focus:border-red-600')
+    // }
     return cls.join(' ')
 })
 

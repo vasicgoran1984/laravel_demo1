@@ -1,17 +1,53 @@
 import axiosClient from "../../axios.js";
 
-// Get Producer By ID
-export function getProducers({commit}) {
-    commit('setProducer', [true])
+// Create New Car
+export function createCar({commit}, car) {
+    return axiosClient.post('/cars', car)
+}
 
-    return axiosClient.get(`producer`)
+// Get All Cars
+export function getCars({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction} = {}) {
+    commit('setCars', [true])
+
+    url = url || '/cars';
+
+    return axiosClient.get(url, {
+        params: {
+            search,
+            per_page: perPage,
+            sort_field,
+            sort_direction,
+        }
+    })
         .then(res => {
-            commit('setProducer', [false, res.data])
+            commit('setCars', [false, res.data])
+        })
+        .catch(() => {
+            commit('setCars', [false])
         })
 }
 
-// Get Producer By ID
-export function getProducerType({commit}, id) {
-    return axiosClient.get(`producer-type/${id}`)
+export function getCarsToAddOwner({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction} = {}) {
+    commit('setCars', [true])
+
+    url = url || '/get-cars-to-add-owner';
+
+    return axiosClient.get(url, {
+        params: {
+            search,
+            per_page: perPage,
+            sort_field,
+            sort_direction,
+        }
+    })
+        .then(res => {
+            commit('setCars', [false, res.data])
+        })
+        .catch(() => {
+            commit('setCars', [false])
+        })
 }
 
+export function showAllCars({commit}) {
+return axiosClient.get(`/show-all-cars`)
+}
