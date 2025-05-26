@@ -21,14 +21,16 @@ class CarController extends Controller
         $sortField = request('sort_field', 'updated_at');
         $sortDirection = request('sort_direction', 'desc');
 
-        $query = Car::query();
+        $user = Auth()->user();
+        $service = $user->service->id;
 
+        $query = Car::query();
         $query->orderBy($sortField, $sortDirection);
+        $query->where('service_id',  "$service");
 
         if ($search) {
-            $query->where('chassis_number', 'like', "%{$search}%")
-                ->orWhere('engine_number', 'like', "%{$search}%")
-                ->orWhere('plate_number', 'like', "%{$search}%");
+            $query->whereHas('service')
+                ->where('chassis_number', 'like', "%{$search}%");
         }
 
         return CarsListResource::collection($query->paginate($perPage));
@@ -37,29 +39,17 @@ class CarController extends Controller
     public function getCarsToAddOwner()
     {
         $search = request('search', false);
-        $sortField = request('sort_field', 'updated_at');
-        $sortDirection = request('sort_direction', 'desc');
+        $perPage = request('per_page', 10);
 
-        $query = Car::query()
-            ->select(['C.id', 'C.chassis_number', 'C.engine_number', 'C.year', 'C.plate_number',
-                      'C.volume', 'C.power', 'C.updated_at', 'C.created_at', 'P.name as producer_name',
-                      'T.name as type_name'])
-            ->from('cars as C')
-            ->join('types as T', 'C.type_id', '=', 'T.id')
-            ->join('producers as P', 'T.producer_id', '=', 'P.id')
-            ->where('C.is_active', '=', CarActive::Inactive->value);
-
-
-        $query->orderBy($sortField, $sortDirection);
+        $query = Car::query();
+        $query->doesntHave('bookService')->get();
 
         if ($search) {
-            $query->where('chassis_number', 'like', "%{$search}%")
-                  ->orWhere('engine_number', 'like', "%{$search}%")
-                  ->orWhere('plate_number', 'like', "%{$search}%");
+            $query->whereHas('service')
+                ->where('chassis_number', 'like', "%{$search}%");
         }
 
-        //return CarsListResource::collection($query->paginate($perPage));
-        return $query->get();
+        return CarsListResource::collection($query->paginate($perPage));
     }
 
     public function showAllCars()
@@ -80,7 +70,9 @@ class CarController extends Controller
      */
     public function store(CarRequest $request)
     {
+        $user = Auth()->user();
         $data = $request->validated();
+        $data['service_id'] = $user->service->id;
         Car::create($data);
     }
 

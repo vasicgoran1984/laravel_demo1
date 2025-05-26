@@ -141,7 +141,6 @@ onMounted(() => {
     // Get Type
     store.dispatch('producer/getProducerType', route.params.id)
         .then(({data}) => {
-            // console.log(data)
             car.type_id = data.type_id;
             producer.value = data.producer_name;
             type.value     = data.type_name;

@@ -22,6 +22,10 @@ import OwnerView from "../views/Owner/OwnerView.vue";
 import Owners from "../views/Owner/Owners.vue";
 import OwnerCars from "../views/OwnerCars/OwnerCars.vue";
 import AddCarOwner from "../views/OwnerCars/AddCarOwner.vue";
+import BookServiceView from "../views/BookService/BookServiceView.vue";
+import CreateService from "../views/CarService/createService.vue";
+import BookService from "../views/BookService/BookService.vue";
+import CarServiceDetails from "../views/CarService/CarServiceDetails.vue";
 
 const routes = [
     {
@@ -111,6 +115,26 @@ const routes = [
                 path: 'addCarOwner/:id',
                 name: 'app.addCarOwner.view',
                 component: AddCarOwner,
+            },
+            {
+                path: 'BookService/:book_id',
+                name: 'app.BookService.view',
+                component: BookServiceView,
+            },
+            {
+                path: 'createService/:book_id',
+                name: 'app.CreateService',
+                component: CreateService,
+            },
+            {
+                path: 'bookService',
+                name: 'app.bookService',
+                component: BookService,
+            },
+            {
+                path: 'CarServiceDetails/:book_id',
+                name: 'app.CarServiceDetails',
+                component: CarServiceDetails,
             },
         ]
     },

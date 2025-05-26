@@ -1,18 +1,18 @@
 import axiosClient from "../../axios.js";
 
-// Create New Car
-export function createCar({commit}, car) {
-    return axiosClient.post('/cars', car)
+// Create New Service for Car
+export function createCarService({commit}, carService) {
+    return axiosClient.post('/carService', carService)
 }
 
 // Get All Cars
-export function getCars({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction, service} = {}) {
+export function getCarServices({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction, service} = {}) {
     if (sort_field === 'updated_at') {
         sort_field = 'id';
     }
-    commit('setCars', [true])
+    commit('setCarService', [true])
 
-    url = url || '/cars';
+    url = url || '/carService';
 
     return axiosClient.get(url, {
         params: {
@@ -24,20 +24,17 @@ export function getCars({commit}, {url = null, search = '', perPage = 10, sort_f
         }
     })
         .then(res => {
-            commit('setCars', [false, res.data])
+            commit('setCarService', [false, res.data])
         })
         .catch(() => {
-            commit('setCars', [false])
+            commit('setCarService', [false])
         })
 }
 
-export function getCarsToAddOwner({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction, service} = {}) {
-    if (sort_field === 'updated_at') {
-        sort_field = 'id';
-    }
+export function unusedFunc({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction} = {}) {
     commit('setCars', [true])
 
-    url = url || '/getCarsToAddOwner';
+    url = url || '/get-cars-to-add-owner';
 
     return axiosClient.get(url, {
         params: {
@@ -45,7 +42,6 @@ export function getCarsToAddOwner({commit}, {url = null, search = '', perPage = 
             per_page: perPage,
             sort_field,
             sort_direction,
-            service,
         }
     })
         .then(res => {
@@ -56,6 +52,6 @@ export function getCarsToAddOwner({commit}, {url = null, search = '', perPage = 
         })
 }
 
-export function showAllCars({commit}) {
-return axiosClient.get(`/show-all-cars`)
+export function showAllCarServicesByBookId({commit}, book_id) {
+return axiosClient.get(`show-all-services/${book_id}`)
 }

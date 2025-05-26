@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Car extends Model
 {
@@ -11,6 +12,7 @@ class Car extends Model
         'type_id',
         'transmission_id',
         'fuel_id',
+        'service_id',
         'chassis_number',
         'engine_number',
         'year',
@@ -23,4 +25,16 @@ class Car extends Model
     {
         return $this->belongsTo(Type::class);
     }
+
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(Service::class);
+    }
+
+    public function bookService(): HasMany
+    {
+        return $this->hasMany(BookService::class);
+    }
+
+
 }

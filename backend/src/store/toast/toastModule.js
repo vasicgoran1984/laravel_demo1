@@ -7,7 +7,7 @@ const toastModule = {
             toast: {
                 show: false,
                 message: '',
-                delay: 3000,
+                delay: 4000,
             }
         }
     ),

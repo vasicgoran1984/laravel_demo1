@@ -74,10 +74,22 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/show-all-cars', [\App\Http\Controllers\Api\CarController::class, 'showAllCars']);
 
     // Get Cars To Add Owner
-    Route::get('/get-cars-to-add-owner', [\App\Http\Controllers\Api\CarController::class, 'getCarsToAddOwner']);
+    Route::get('/getCarsToAddOwner', [\App\Http\Controllers\Api\CarController::class, 'getCarsToAddOwner']);
 
     // Owner Cars
     Route::apiResource('ownerCars', \App\Http\Controllers\Api\CarOwnerController::class);
+
+    // Book Service
+    Route::apiResource('bookService', \App\Http\Controllers\Api\BookServiceController::class);
+
+    Route::get('/lastBookService/{book_id}', [\App\Http\Controllers\Api\BookServiceController::class, 'lastBookService']);
+    Route::put('/insertKilometers/{book_id}', [\App\Http\Controllers\Api\BookServiceController::class, 'insertKilometers']);
+
+    // Car Service
+    Route::apiResource('carService', \App\Http\Controllers\Api\CarServiceController::class);
+
+    // Show All Services By Book Service ID
+    Route::get('show-all-services/{book_id}', [\App\Http\Controllers\Api\CarServiceController::class, 'showAllServices']);
 
 });
 

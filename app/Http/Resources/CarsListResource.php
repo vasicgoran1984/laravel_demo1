@@ -7,6 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class CarsListResource extends JsonResource
 {
+    public static $wrap = false;
     /**
      * Transform the resource into an array.
      *
@@ -23,8 +24,13 @@ class CarsListResource extends JsonResource
             'volume'         => $this->volume,
             'power'          => $this->power,
             'created_at'     => (new \DateTime($this->created_at))->format('Y-m-d H:i:s'),
-            'type_name' => $this->type->name,
-            'producer_name' => $this->type->producer->name,
+            'type_name'      => $this->type->name,
+            'producer_name'  => $this->type->producer->name,
+            'items'          => $this->bookService->map(fn($service) => [
+                'id'       =>  $service->id,
+                'car_id'   => $service->car_id,
+                'owner_id' =>  $service->owner_id,
+            ]),
         ];
     }
 }

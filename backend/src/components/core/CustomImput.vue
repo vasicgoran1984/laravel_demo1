@@ -22,6 +22,7 @@
                 :value="props.modelValue"
                 @input="emit('update:modelValue', $event.target.value)"
                 :class="inputClasses"
+                rows="4"
                 :placeholder="label"></textarea>
             </template>
             <template v-else-if="type === 'file'">
@@ -68,7 +69,7 @@
 import {computed} from "vue";
 
 const props = defineProps({
-    modelValue: [String, Number, File],
+    modelValue: [String, Number, File, Boolean],
     label: String,
     type: {
         type: String,

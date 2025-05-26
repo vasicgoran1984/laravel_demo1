@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CarOwnerRequest;
-use App\Models\Car;
-use App\Models\CarOwner;
+use App\Http\Requests\CarServiceRequest;
+use App\Http\Resources\AllCarServiceListResource;
+use App\Models\CarService;
 use Illuminate\Http\Request;
 
-class CarOwnerController extends Controller
+class CarServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,16 +29,15 @@ class CarOwnerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CarOwnerRequest $request)
+    public function store(CarServiceRequest $request)
     {
-        dd('...');
         $data = $request->validated();
+        $user = Auth()->user();
+        $data['service_id'] = $user->service->id;
+        $data['description'] = $request->description;
+        $data['oil_name'] = $request->oil_name;
 
-        $carOwner = CarOwner::create($data);
-
-        Car::where('id', '=', $data['car_id'])->update(['is_active' => 'active']);
-
-        return $carOwner;
+        CarService::create($data);
     }
 
     /**
@@ -71,5 +70,21 @@ class CarOwnerController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function showAllServices($book_id)
+    {
+//        return 'xx';
+//        dd('yy');
+        $carService = CarService::where('book_service_id', '=', $book_id)->get();
+
+        //$carService->created_at->diffForHumans();
+
+        //return $carService->created_at;
+
+        return $carService;
+
+
+        //return AllCarServiceListResource::collection($carService);
     }
 }

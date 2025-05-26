@@ -7,6 +7,8 @@ use App\Http\Requests\OwnerRequest;
 use App\Http\Resources\OwnersListResource;
 use App\Models\Owner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OwnerController extends Controller
 {
@@ -20,15 +22,18 @@ class OwnerController extends Controller
         $sortField = request('sort_field', 'updated_at');
         $sortDirection = request('sort_direction', 'desc');
 
+        $user = Auth()->user();
+        $service = $user->service->id;
+
         $query = Owner::query();
 
         $query->orderBy($sortField, $sortDirection);
+        $query->where('service_id',  "$service");
 
         if ($search) {
-            $query->where('first_name', 'like', "%{$search}%")
-                ->orWhere('last_name', 'like', "%{$search}%")
-                ->orWhere('address', 'like', "%{$search}%")
-                ->orWhere('city', 'like', "%{$search}%");
+            $query->where(DB::raw("first_name"), "like", "%".$search."%")
+                ->orWhere(DB::raw("last_name"), "like", "%".$search."%")
+                ->where('service_id',  "$service");
         }
 
         return OwnersListResource::collection($query->paginate($perPage));
@@ -47,7 +52,9 @@ class OwnerController extends Controller
      */
     public function store(OwnerRequest $request)
     {
+        $user = Auth()->user();
         $data = $request->validated();
+        $data['service_id'] = $user->service->id;
         Owner::create($data);
     }
 

@@ -13,6 +13,8 @@ import volume from './volume/volumeModule.js'
 import car from './car/carModule.js'
 import owner from './owner/ownerModule.js'
 import ownerCars from "./ownerCars/ownerCarsModule.js";
+import bookService from "./bookService/bookServiceModule.js";
+import carService from "./carService/carServiceModule.js";
 
 const store = createStore({
     modules: {
@@ -30,6 +32,8 @@ const store = createStore({
         car,
         owner,
         ownerCars,
+        bookService,
+        carService,
     }
 })
 

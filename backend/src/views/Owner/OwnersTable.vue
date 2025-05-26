@@ -83,7 +83,7 @@
         </table>
         <div v-if="!owners.loading" class="flex justify-between items-center mt-5">
         <span>
-          Stranica {{ owners.from }} od {{ owners.to }}
+          Redova {{ owners.from }} od {{ owners.to }}
         </span>
             <nav
                 v-if="owners.total > owners.limit"
@@ -100,13 +100,13 @@
                     aria-current="page"
                     class="relative inline-flex items-center px-4 py-2 border text-sm font-medium whitespace-nowrap"
                     :class="[
-              link.active
-                ? 'z-10 bg-gray-500 border-gray-500 text-gray-600'
-                : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
-              i === 0 ? 'rounded-l-md' : '',
-              i === owners.links.length - 1 ? 'rounded-r-md' : '',
-              !link.url ? ' bg-gray-100 text-gray-700': ''
-            ]"
+                      link.active
+                        ? 'z-10 bg-gray-500 border-gray-500 text-gray-600'
+                        : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
+                      i === 0 ? 'rounded-l-md' : '',
+                      i === owners.links.length - 1 ? 'rounded-r-md' : '',
+                      !link.url ? ' bg-gray-100 text-gray-700': ''
+                    ]"
                     v-html="link.label"
                 >
                 </a>

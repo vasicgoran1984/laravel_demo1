@@ -40,6 +40,9 @@
                                  :sort-field="sortField" :sort-direction="sortDirection">E-mail
                 </TableHeaderCell>
                 <TableHeaderCell field="actions">
+                    Servisna Knjiga
+                </TableHeaderCell>
+                <TableHeaderCell field="actions">
                     Dodaj Vozilo
                 </TableHeaderCell>
             </tr>
@@ -54,7 +57,7 @@
             <tbody v-else>
             <tr v-for="owner of owners.data" class="hover:bg-gray-100">
                 <td class="border-b p-2">{{owner.id}}</td>
-                {{owner.car_owner}}
+<!--                {{owner.car_owner}}-->
                 <td class="border-b p-2">
                     {{owner.first_name}} {{owner.last_name}}
                 </td>
@@ -71,12 +74,15 @@
                     {{owner.email}}
                 </td>
                 <td class="border-b p-2">
-<!--                    <button-->
-<!--                        :class="['group flex w-full items-center rounded-md px-2 py-2 text-sm']"-->
-<!--                        @click="addCar(owner)">-->
-<!--                        <PlusIcon class="mr-2 h-5 w-5 text-gray-800" aria-hidden="true"/>-->
-<!--                        <b>Dodaj</b>-->
-<!--                    </button>-->
+                    <div v-for="carOwner of owner.car_owner">
+                        <router-link :to="{name: 'app.BookService.view', params: {owner_id: owner.id, car_id: carOwner.car_id}}" class="['group flex w-full items-center rounded-md px-2 py-2 text-sm']">
+                            <ClipboardIcon class="mr-2 h-5 w-5 text-gray-800" aria-hidden="true"/>
+                            {{carOwner}}
+                        </router-link>
+
+                    </div>
+                </td>
+                <td class="border-b p-2">
                     <router-link :to="{name: 'app.addCarOwner.view', params: {id: owner.id}}" class="['group flex w-full items-center rounded-md px-2 py-2 text-sm']">
                         <PlusIcon class="mr-2 h-5 w-5 text-gray-800" aria-hidden="true"/>
                             <b>Dodaj Vozilo</b>
@@ -88,7 +94,7 @@
         </table>
         <div v-if="!owners.loading" class="flex justify-between items-center mt-5">
         <span>
-          Stranica {{ owners.from }} od {{ owners.to }}
+          Redova {{ owners.from }} od {{ owners.to }}
         </span>
             <nav
                 v-if="owners.total > owners.limit"
@@ -105,20 +111,19 @@
                     aria-current="page"
                     class="relative inline-flex items-center px-4 py-2 border text-sm font-medium whitespace-nowrap"
                     :class="[
-              link.active
-                ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
-                : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
-              i === 0 ? 'rounded-l-md' : '',
-              i === owners.links.length - 1 ? 'rounded-r-md' : '',
-              !link.url ? ' bg-gray-100 text-gray-700': ''
-            ]"
+                      link.active
+                        ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
+                        : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
+                      i === 0 ? 'rounded-l-md' : '',
+                      i === owners.links.length - 1 ? 'rounded-r-md' : '',
+                      !link.url ? ' bg-gray-100 text-gray-700': ''
+                    ]"
                     v-html="link.label"
                 >
                 </a>
             </nav>
         </div>
     </div>
-    <OwnerCarsModal v-model="showModal" :owner="ownerModel" @close="onModalClose" />
 </template>
 
 <script setup>
@@ -126,9 +131,8 @@ import store from "../../store/index.js";
 import {computed, onMounted, ref} from "vue";
 import {OWNERS_PER_PAGE} from "../../constants.js";
 import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
-import {DotsVerticalIcon, PencilIcon, TrashIcon, PlusIcon} from '@heroicons/vue/outline'
+import {DotsVerticalIcon, PencilIcon, TrashIcon, PlusIcon, ClipboardIcon} from '@heroicons/vue/outline'
 import Spinner from "../../components/core/Spinner.vue";
-import OwnerCarsModal from "./OwnerCarsModal.vue";
 
 const perPage = ref(OWNERS_PER_PAGE);
 const search = ref('');
@@ -140,14 +144,8 @@ const showModal = ref(false);
 
 onMounted(() => {
     getOwners();
-
-    console.log(owners)
 })
 
-const DEFAULT_EMPTY_OWNER = {
-    id: '',
-}
-const ownerModel = ref({...DEFAULT_EMPTY_OWNER})
 
 // Get All Owners
 function getOwners(url = null) {
@@ -187,21 +185,7 @@ function showOwnerModal() {
     showModal.value = true;
 }
 
-function addCar(owner) {
-    store.dispatch('owner/getOwner', owner.id)
-        .then(({data}) => {
-            ownerModel.value = data
-            showOwnerModal()
-        })
-}
-
-function onModalClose() {
-    console.log('modal close')
-}
-
-
 </script>
-
 
 <style scoped>
 
