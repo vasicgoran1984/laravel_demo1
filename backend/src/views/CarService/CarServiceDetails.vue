@@ -9,8 +9,15 @@
             <div v-for="item of carServices" class="w-full">
 
                     <div class="justify-between mb-3"  v-if="item.oil === 1">
-                        <div class="text-2xl bg-blue-500 w-full font-bold p-2 text-white">
-                            <h3>Mali Servis | Kilometri: {{item.kilometers}}</h3>
+                        <div class="text-2xl bg-blue-500 w-full font-bold p-2 text-white flow-root">
+                                <div class="float-left">
+                                    <h3>Mali Servis | Kilometri: {{item.kilometers}}</h3>
+                                </div>
+                                <div class="float-right">
+                                    <button @click="showPdf(item.id)">
+                                        <PrinterIcon class="text-3xl size-8 mr-2 h-5 w-5 text-white" aria-hidden="true"/>
+                                    </button>
+                                </div>
                         </div>
                         <div class="text-2xl w-full mt-2 p-2" v-if="item.oil === 1">
                             <div class="flex flex-row">
@@ -90,8 +97,15 @@
                              item.rear_left_cylinder === 1 ||
                              item.rear_right_cylinder === 1"
                     >
-                        <div class="text-2xl bg-green-500 w-full font-bold p-2 text-white">
-                            <h3>Kočnice | Kilometri: {{item.kilometers}}</h3>
+                        <div class="text-2xl bg-green-500 w-full font-bold p-2 text-white flow-root">
+                            <div class="float-left">
+                                <h3>Kočnice | Kilometri: {{item.kilometers}}</h3>
+                            </div>
+                            <div class="float-right">
+                                <button @click="showPdf(item.id)">
+                                    <PrinterIcon class="text-3xl size-8 mr-2 h-5 w-5 text-white" aria-hidden="true"/>
+                                </button>
+                            </div>
                         </div>
                         <div class="text-2xl w-full mt-2 p-2">
                             <div class="flex flex-row">
@@ -206,8 +220,15 @@
                 <div class="justify-between mb-3"
                      v-if="item.belt === 1"
                 >
-                    <div class="text-2xl bg-orange-500 w-full font-bold p-2 text-white">
-                        <h3>Veliki Servis | Kilometri: {{item.kilometers}}</h3>
+                    <div class="text-2xl bg-orange-500 w-full font-bold p-2 text-white flow-root">
+                        <div class="float-left">
+                            <h3>Veliki Servis | Kilometri: {{item.kilometers}}</h3>
+                        </div>
+                        <div class="float-right">
+                            <button @click="showPdf(item.id)">
+                                <PrinterIcon class="text-3xl size-8 mr-2 h-5 w-5 text-white" aria-hidden="true"/>
+                            </button>
+                        </div>
                     </div>
                     <div class="text-2xl w-full mt-2 p-2">
                         <div class="flex flex-row">
@@ -303,16 +324,16 @@
 <script setup>
 
 
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
+import store from "../../store/index.js";
+import {useRoute} from "vue-router";
+import Spinner from "../../components/core/Spinner.vue";
+import {PrinterIcon} from "@heroicons/vue/solid";
 
 const loading = ref(true);
 const route = useRoute()
 const carServices = ref(null);
-
-
-import store from "../../store/index.js";
-import {useRoute} from "vue-router";
-import Spinner from "../../components/core/Spinner.vue";
+const currentUser = store.state.user.user.data
 
 
 onMounted(() => {
@@ -326,6 +347,37 @@ function showAllCarServices() {
             loading.value = false;
             carServices.value = data;
         })
+}
+
+function printInvoice(car_service_id) {
+    store.dispatch('carService/printInvoice', car_service_id)
+        .then(({data}) => {
+            loading.value = false;
+        })
+}
+
+function showPdf(item) {
+    const userId = currentUser.id
+    window.open(
+        `http://localhost:8001/export-pdf/${item}/${userId}`,
+        '_blank' // Open in a new window.
+    );
+}
+
+function UnusedPrintPdf(car_service_id) {
+    return axios({
+        url: `export-invoice/${car_service_id}`,
+        method: 'GET',
+        responseType: 'blob',
+    }).then((response) => {
+        console.log(response)
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'pdf.pdf');
+        document.body.appendChild(link);
+        link.click();
+    })
 }
 
 </script>

@@ -52,6 +52,27 @@ export function unusedFunc({commit}, {url = null, search = '', perPage = 10, sor
         })
 }
 
+// Show All Services By BookId
 export function showAllCarServicesByBookId({commit}, book_id) {
 return axiosClient.get(`show-all-services/${book_id}`)
+}
+
+// Print Invoice
+export function printInvoice({commit}, car_service_id) {
+return axiosClient.get(`export-invoice/${car_service_id}`)
+}
+
+export function printPdfUnused({commit}, car_service_id) {
+    return axios({
+        url: `export-invoice/${car_service_id}`,
+        method: 'GET',
+        responseType: 'blob',
+    }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'file.pdf');
+        document.body.appendChild(link);
+        link.click();
+    })
 }
