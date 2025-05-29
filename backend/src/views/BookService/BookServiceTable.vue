@@ -15,7 +15,7 @@
             <div>
                 <input @change="getServiceBooks(null)" v-model="search"
                        class="appearance-none relative block w-48 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                       placeholder="Traži...">
+                       placeholder="Traži po imenu ili prezim...">
             </div>
         </div>
         <table class="table-auto w-full">

@@ -74,17 +74,9 @@ class CarServiceController extends Controller
 
     public function showAllServices($book_id)
     {
-//        return 'xx';
-//        dd('yy');
         $carService = CarService::where('book_service_id', '=', $book_id)->get();
-
-        //$carService->created_at->diffForHumans();
-
-        //return $carService->created_at;
 
         return $carService;
 
-
-        //return AllCarServiceListResource::collection($carService);
     }
 }

@@ -28,9 +28,11 @@ class BookServiceController extends Controller
         $service = $user->service->id;
 
         $query = BookService::query()
-            ->select(['BS.id', 'BS.car_id', 'BS.owner_id', 'C.chassis_number', 'O.first_name', 'O.last_name', 'O.updated_at'])
+            ->select(['BS.id', 'BS.car_id', 'BS.owner_id', 'C.chassis_number', 'O.first_name', 'O.last_name', 'O.city', 'T.name as type_name', 'P.name as producer_name', 'O.updated_at'])
             ->from('book_services as BS')
             ->join('cars as C', 'C.id', '=','BS.car_id')
+            ->join('types as T', 'T.id', '=','C.type_id')
+            ->join('producers as P', 'P.id', '=','T.producer_id')
             ->join('owners as O', 'O.id', '=','BS.owner_id');
         $query->orderBy($sortField, $sortDirection);
         $query->where('BS.service_id',  "$service")->with(['cars', 'owners']);
