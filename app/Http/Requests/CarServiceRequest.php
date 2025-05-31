@@ -23,7 +23,7 @@ class CarServiceRequest extends FormRequest
     {
         return [
             'book_service_id' => ['required'],
-            'oil' => ['required'],
+//            'oil' => ['required'],
 //            'oil_name' => ['required'],
             'oil_filter' => ['required'],
             'air_filter' => ['required'],

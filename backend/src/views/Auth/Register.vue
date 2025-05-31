@@ -31,7 +31,7 @@
                 </div>
                 <div class="mt-2">
                     <input type="text" name="first_name" id="first_name" autocomplete="first_name" v-model="user.first_name"
-                           class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="Ime"/>
+                           class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6" placeholder="Ime"/>
                 </div>
             </div>
 
@@ -41,7 +41,7 @@
                 </div>
                 <div class="mt-2">
                     <input type="text" name="last_name" id="last_name" autocomplete="last_name" v-model="user.last_name"
-                           class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="Prezime"/>
+                           class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6" placeholder="Prezime"/>
                 </div>
             </div>
 
@@ -51,7 +51,7 @@
                 </div>
                 <div class="mt-2">
                     <input type="email" name="email" id="email" autocomplete="email" required="" v-model="user.email"
-                           class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="Email"/>
+                           class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:gray-gray-600 sm:text-sm/6" placeholder="Email"/>
                 </div>
             </div>
 
@@ -61,17 +61,17 @@
                 </div>
                 <div class="mt-2">
                     <input type="password" name="password" id="password" autocomplete="current-password" required="" v-model="user.password"
-                           class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="Password"/>
+                           class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6" placeholder="Password"/>
                 </div>
             </div>
 
             <div>
                 <button type="submit"
                         :disabled="loading"
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                         :class="{
                   'cursor-not-allowed': loading,
-                  'hover:bg-indigo-500': loading,
+                  'hover:bg-gray-500': loading,
                 }">
                     <svg
                         v-if="loading"
@@ -95,7 +95,7 @@
                         ></path>
                     </svg>
                     <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-              <LockClosedIcon class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true"/>
+              <LockClosedIcon class="h-5 w-5 text-gray-500 group-hover:text-gray-400" aria-hidden="true"/>
             </span>
                     Registracija
                 </button>
@@ -103,7 +103,7 @@
         </form>
         <div class="flex items-center justify-between">
             <div class="text-sm">
-                <router-link :to="{name: 'login'}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                <router-link :to="{name: 'login'}" class="font-medium text-gray-600 hover:text-gray-500">
                     Prijavi se
                 </router-link>
             </div>

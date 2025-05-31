@@ -51,11 +51,11 @@
                 <div class="bg-white px-4 pt-5 pb-4">
                     <div class="grid grid-cols-1 md:grid-cols-6 gap-2">
                         <CustomInput class="mb-2" v-model="carService.oil_name" label="Naziv Ulja" />
-                        <CustomInput type="checkbox" class="mb-2" v-model="carService.oil" label="Ulje"/>
-                        <CustomInput type="checkbox" class="mb-2" v-model="carService.oil_filter" label="Filter Ulja"/>
-                        <CustomInput type="checkbox" class="mb-2" v-model="carService.inner_filter" label="Filter Kabine"/>
-                        <CustomInput type="checkbox" class="mb-2" v-model="carService.air_filter" label="Filter Vazduha"/>
-                        <CustomInput type="checkbox" class="mb-2" v-model="carService.fuel_filter"  label="Filter Goriva"/>
+<!--                        <CustomInput type="checkbox" class="mb-2" v-model="carService.oil" label="Ulje"/>-->
+                        <CustomInput id="oil_filter" type="checkbox" name="oil_filter" class="mb-2" v-model="carService.oil_filter" label="Filter Ulja"/>
+                        <CustomInput id="inner_filter" type="checkbox" name="inner_filter" class="mb-2" v-model="carService.inner_filter" label="Filter Kabine"/>
+                        <CustomInput type="checkbox" name="air_filter" class="mb-2" v-model="carService.air_filter" label="Filter Vazduha"/>
+                        <CustomInput type="checkbox" name="fule_filter" class="mb-2" v-model="carService.fuel_filter"  label="Filter Goriva"/>
                     </div>
                 </div>
             </div>

@@ -26,6 +26,7 @@ import BookServiceView from "../views/BookService/BookServiceView.vue";
 import CreateService from "../views/CarService/createService.vue";
 import BookService from "../views/BookService/BookService.vue";
 import CarServiceDetails from "../views/CarService/CarServiceDetails.vue";
+import EditOwner from "../views/Owner/EditOwner.vue";
 
 const routes = [
     {
@@ -100,6 +101,11 @@ const routes = [
                 path: 'owner',
                 name: 'app.owners.view',
                 component: OwnerView,
+            },
+            {
+                path: 'owner/:owner',
+                name: 'app.owner.edit',
+                component: EditOwner,
             },
             {
                 path: 'owners',
@@ -184,7 +190,9 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.requiresAuth && !store.state.user.user.token) {
+    if (to.path === '/') {
+        next({name: 'login'})
+    } else if (to.meta.requiresAuth && !store.state.user.user.token) {
         next({name: 'login'})
     } else if (to.meta.requiresGuest && store.state.user.user.token) {
         next({name: 'app.dashboard'})

@@ -28,7 +28,7 @@ class CarRequest extends FormRequest
             'chassis_number' => ['required'],
             'engine_number' => ['required'],
             'year'  => ['required'],
-            'plate_number' => ['required'],
+//            'plate_number' => ['required'],
             'volume' => ['required'],
             'power' => ['required'],
         ];

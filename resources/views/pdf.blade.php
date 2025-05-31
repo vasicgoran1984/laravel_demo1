@@ -114,6 +114,7 @@
                 <div><b>Vozilo: {{ $data['producer']->name }} {{ $data['type']->name }}</b></div>
                 <div><b>Broj Šasije: {{ $data['car']->chassis_number }}</b></div>
                 <div><b>Servis uradjen na: {{ $data['service']->kilometers }} kilometara</b></div>
+                <div><b>Datum: {{ date('d-m-Y', strtotime($data['service']->created_at)) }}</b></div>
             </div>
             </div>
         </div>
@@ -121,7 +122,7 @@
 
 
     <!-- Small Service -->
-    @if($data['service']->oil)
+{{--    @if($data['service']->oil)--}}
         <div class="container-service">
             <span class="flex flex-col font-bold">
                 <span class="text-base"><b>Mali Servis:</b></span>
@@ -145,7 +146,7 @@
                                         <input type="checkbox" id="vehicle1">
                                     </td>
                                     <td>
-                                        {{ $data['service']->oil_name }}
+                                        Ulje
                                     </td>
                                 </tr>
                             @endif
@@ -234,7 +235,7 @@
                 </div>
             </div>
         </div>
-    @endif
+{{--    @endif--}}
 
     <!-- Big Service -->
     @if($data['service']->belt)

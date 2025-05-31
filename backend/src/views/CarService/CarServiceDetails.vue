@@ -8,7 +8,7 @@
         <div v-if="carServices" class="px-4 pt-5 pb-4 py-2 mt-2">
             <div v-for="item of carServices" class="w-full">
 
-                    <div class="justify-between mb-3"  v-if="item.oil === 1">
+                    <div class="justify-between mb-3">
                         <div class="text-2xl bg-blue-500 w-full font-bold p-2 text-white flow-root">
                                 <div class="float-left">
                                     <h3>Mali Servis | Kilometri: {{item.kilometers}}</h3>
@@ -19,68 +19,105 @@
                                     </button>
                                 </div>
                         </div>
-                        <div class="text-2xl w-full mt-2 p-2" v-if="item.oil === 1">
+                        <div class="text-2xl w-full mt-2 p-2">
                             <div class="flex flex-row">
 
                                 <div class="border-gray-500 px-4 pb-4">
                                     <div class="grid grid-cols-1 md:grid-cols-1 gap-2 text-xl">
-                                        <div>
-                                            <h3>Ulje: <span>Da</span></h3>
-                                            <h3>Naziv Ulja: <span>{{item.oil_name}}</span></h3>
+                                        <div v-if="item.oil_name" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                            <span class="mr-2 text-gray-900">
+                                                <CheckIcon class="w-5" />
+                                            </span>
+                                            <span class="text-1xl">
+                                                {{item.oil_name}}
+                                            </span>
+                                        </div>
+                                        <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                            <span class="mr-2 text-gray-900">
+                                                <x-icon class="w-5" />
+                                            </span>
+                                            <span class="text-1xl">
+                                                Ulje
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="px-4 pb-4 text-xl">
-                                    <div class="grid grid-cols-1 md:grid-cols-1 gap-2">
-                                        <div>
-                                            <h3>
-                                                Filter Ulja:
-                                                <span v-if="item.oil_filter">
-                                                Da
-                                            </span>
-                                                <span v-else>
-                                                Ne
-                                            </span>
-                                            </h3>
 
-                                            <h3>
-                                                Filter Vazduha:
-                                                <span v-if="item.air_filter">
-                                                Da
-                                            </span>
-                                                <span v-else>
-                                                Ne
-                                            </span>
-                                            </h3>
-
-                                        </div>
+                                    <div v-if="item.oil_filter" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <CheckIcon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Filter Ulja
+                                        </span>
                                     </div>
+                                    <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <x-icon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Filter Ulja
+                                        </span>
+                                    </div>
+
+                                    <div v-if="item.air_filter" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <CheckIcon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Filter Vazduha
+                                        </span>
+                                    </div>
+                                    <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <x-icon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Filter Vazduha
+                                        </span>
+                                    </div>
+
                                 </div>
 
                                 <div class="px-4 pb-4 text-xl">
+
+                                    <div v-if="item.inner_filter" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <CheckIcon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Filter Kabine
+                                        </span>
+                                    </div>
+                                    <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <x-icon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Filter Kabine
+                                        </span>
+                                    </div>
+
                                     <div class="grid grid-cols-1 md:grid-cols-1">
-                                        <div>
-                                            <h3>
-                                                Filter Kabine:
-                                                <span v-if="item.inner_filter">
-                                                Da
+                                        <div v-if="item.fuel_filter" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                            <span class="mr-2 text-gray-900">
+                                                <CheckIcon class="w-5" />
                                             </span>
-                                                <span v-else>
-                                                Ne
+                                            <span class="text-1xl">
+                                                Filter Goriva
                                             </span>
-                                            </h3>
-
-                                            <h3>
-                                                Filter Goriva:
-                                                <span v-if="item.fuel_filter">
-                                                Da
-                                            </span>
-                                                <span v-else>
-                                                Ne
-                                            </span>
-                                            </h3>
                                         </div>
+                                        <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                            <span class="mr-2 text-gray-900">
+                                                <x-icon class="w-5" />
+                                            </span>
+                                            <span class="text-1xl">
+                                                Filter Goriva
+                                            </span>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -111,106 +148,149 @@
                             <div class="flex flex-row">
                                 <div class="px-4 pb-4 text-xl">
                                     <div class="grid grid-cols-1 md:grid-cols-1">
-                                        <div>
-                                            <h3>
-                                                Prednje Pločice:
-                                                <span v-if="item.brake_pads_front">
-                                                    Da
-                                                </span>
-                                                <span v-else>
-                                                    Ne
-                                                </span>
-                                            </h3>
 
-                                            <h3>
-                                                Zadnje Pločice:
-                                                <span v-if="item.brake_pads_rear">
-                                                    Da
-                                                </span>
-                                                <span v-else>
-                                                    Ne
-                                                </span>
-                                            </h3>
+                                        <div v-if="item.brake_pads_front" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                            <span class="mr-2 text-gray-900">
+                                                <CheckIcon class="w-5" />
+                                            </span>
+                                            <span class="text-1xl">
+                                                Prednje Pločice
+                                            </span>
                                         </div>
+                                        <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                            <span class="mr-2 text-gray-900">
+                                                <x-icon class="w-5" />
+                                            </span>
+                                            <span class="text-1xl">
+                                                Prednje Pločice
+                                            </span>
+                                        </div>
+
+                                        <div v-if="item.brake_pads_rear" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                            <span class="mr-2 text-gray-900">
+                                                <CheckIcon class="w-5" />
+                                            </span>
+                                            <span class="text-1xl">
+                                                Zadnje Pločice
+                                            </span>
+                                        </div>
+                                        <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                            <span class="mr-2 text-gray-900">
+                                                <x-icon class="w-5" />
+                                            </span>
+                                            <span class="text-1xl">
+                                                Zadnje Pločice
+                                            </span>
+                                        </div>
+
                                     </div>
                                 </div>
 
                                 <div class="px-4 pb-4 text-xl">
-                                    <div class="grid grid-cols-1 md:grid-cols-1">
-                                        <div>
-                                            <h3>
-                                                Prednji Diskovi:
-                                                <span v-if="item.disc_front">
-                                                    Da
-                                                </span>
-                                                <span v-else>
-                                                    Ne
-                                                </span>
-                                            </h3>
+                                    <div v-if="item.disc_front" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <CheckIcon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Prednji Diskovi
+                                        </span>
+                                    </div>
+                                    <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <x-icon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Prednji Diskovi
+                                        </span>
+                                    </div>
 
-                                            <h3>
-                                                Zadnji Diskovi:
-                                                <span v-if="item.disc_rear">
-                                                    Da
-                                                </span>
-                                                <span v-else>
-                                                    Ne
-                                                </span>
-                                            </h3>
-                                        </div>
+                                    <div v-if="item.disc_rear" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <CheckIcon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Zadnji Diskovi
+                                        </span>
+                                    </div>
+                                    <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <x-icon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Zadnji Diskovi
+                                        </span>
                                     </div>
                                 </div>
 
                                 <div class="px-4 pb-4 text-xl">
-                                    <div class="grid grid-cols-1 md:grid-cols-1">
-                                        <div>
-                                            <h3>
-                                                Prednja Lijeva Kliješta:
-                                                <span v-if="item.front_left_cylinder">
-                                                    Da
-                                                </span>
-                                                <span v-else>
-                                                    Ne
-                                                </span>
-                                            </h3>
+                                    <div v-if="item.front_left_cylinder" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <CheckIcon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Prednja Lijeva Kliješta
+                                        </span>
+                                    </div>
+                                    <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <x-icon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Prednja Lijeva Kliješta
+                                        </span>
+                                    </div>
 
-                                            <h3>
-                                                Prednja Desna Kliješta:
-                                                <span v-if="item.front_right_cylinder">
-                                                    Da
-                                                </span>
-                                                <span v-else>
-                                                    Ne
-                                                </span>
-                                            </h3>
-                                        </div>
+                                    <div v-if="item.front_right_cylinder" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <CheckIcon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Prednja Desna Kliješta
+                                        </span>
+                                    </div>
+                                    <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <x-icon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Prednja Desna Kliješta
+                                        </span>
                                     </div>
                                 </div>
 
                                 <div class="px-4 pb-4 text-xl">
-                                    <div class="grid grid-cols-1 md:grid-cols-1">
-                                        <div>
+                                    <div v-if="item.rear_left_cylinder" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <CheckIcon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Zadnja Lijeva Kliješta
+                                        </span>
+                                    </div>
+                                    <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <x-icon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Zadnja Lijeva Kliješta
+                                        </span>
+                                    </div>
 
-                                            <h3>
-                                                Zadnja Lijeva Kliješta:
-                                                <span v-if="item.rear_left_cylinder">
-                                                    Da
-                                                </span>
-                                                <span v-else>
-                                                    Ne
-                                                </span>
-                                            </h3>
-
-                                            <h3>
-                                                Zadnja Desna Kliješta:
-                                                <span v-if="item.rear_right_cylinder">
-                                                    Da
-                                                </span>
-                                                <span v-else>
-                                                    Ne
-                                                </span>
-                                            </h3>
-                                        </div>
+                                    <div v-if="item.rear_right_cylinder" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <CheckIcon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Zadnja Desna Kliješta
+                                        </span>
+                                    </div>
+                                    <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <x-icon class="w-5" />
+                                        </span>
+                                        <span class="text-1xl">
+                                            Zadnja Desna Kliješta
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -233,80 +313,127 @@
                     <div class="text-2xl w-full mt-2 p-2">
                         <div class="flex flex-row">
                             <div class="px-4 pb-4 text-xl">
-                                <div class="grid grid-cols-1 md:grid-cols-1">
-                                    <div>
-                                        <h3>
-                                            Zupčasti Kaiš:
-                                            <span v-if="item.belt">
-                                                    Da
-                                                </span>
-                                            <span v-else>
-                                                    Ne
-                                                </span>
-                                        </h3>
+                                <div v-if="item.belt" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <CheckIcon class="w-5" />
+                                        </span>
+                                    <span class="text-1xl">
+                                            Zupčasti Kaiš
+                                        </span>
+                                </div>
+                                <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <x-icon class="w-5" />
+                                        </span>
+                                    <span class="text-1xl">
+                                            Zupčasti Kaiš
+                                        </span>
+                                </div>
 
-                                        <h3>
-                                            Vodena Pumpa:
-                                            <span v-if="item.water_pump">
-                                                    Da
-                                                </span>
-                                            <span v-else>
-                                                    Ne
-                                                </span>
-                                        </h3>
-
-
-                                    </div>
+                                <div v-if="item.water_pump" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <CheckIcon class="w-5" />
+                                        </span>
+                                    <span class="text-1xl">
+                                            Vodena Pumpa
+                                        </span>
+                                </div>
+                                <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <x-icon class="w-5" />
+                                        </span>
+                                    <span class="text-1xl">
+                                            Vodena Pumpa
+                                        </span>
                                 </div>
                             </div>
 
                             <div class="px-4 pb-4 text-xl">
-                                <div class="grid grid-cols-1 md:grid-cols-1">
-                                    <div>
-                                        <h3>
-                                            Španer Z. Remena:
-                                            <span v-if="item.spanner">
-                                                    Da
-                                                </span>
-                                            <span v-else>
-                                                    Ne
-                                                </span>
-                                        </h3>
-                                        <h3>
-                                            Španer Rolna:
-                                            <span v-if="item.roll">
-                                                    Da
-                                                </span>
-                                            <span v-else>
-                                                    Ne
-                                                </span>
-                                        </h3>
-                                    </div>
+                                <div v-if="item.spanner" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <CheckIcon class="w-5" />
+                                        </span>
+                                    <span class="text-1xl">
+                                            Španer Z. Remena
+                                        </span>
+                                </div>
+                                <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <x-icon class="w-5" />
+                                        </span>
+                                    <span class="text-1xl">
+                                            Španer Z. Remena
+                                        </span>
+                                </div>
+                                <div v-if="item.roll" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <CheckIcon class="w-5" />
+                                        </span>
+                                    <span class="text-1xl">
+                                            Španer Rolna
+                                        </span>
+                                </div>
+                                <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <x-icon class="w-5" />
+                                        </span>
+                                    <span class="text-1xl">
+                                            Španer Rolna
+                                        </span>
                                 </div>
                             </div>
 
                             <div class="px-4 pb-4 text-xl">
-                                <div class="grid grid-cols-1 md:grid-cols-1">
-                                    <div>
-                                        <h3>
-                                            Trakasti Remen:
-                                            <span v-if="item.outside_belt">
-                                                    Da
-                                                </span>
-                                            <span v-else>
-                                                    Ne
-                                                </span>
-                                        </h3>
-                                        <h3>
-                                            Španer Trak. Remena:
-                                            <span v-if="item.outside_spanner">
-                                                    Da
-                                                </span>
-                                            <span v-else>
-                                                    Ne
-                                                </span>
-                                        </h3>
-                                    </div>
+                                <div v-if="item.outside_belt" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <CheckIcon class="w-5" />
+                                        </span>
+                                    <span class="text-1xl">
+                                            Trakasti Remen
+                                        </span>
+                                </div>
+                                <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                        <span class="mr-2 text-gray-900">
+                                            <x-icon class="w-5" />
+                                        </span>
+                                    <span class="text-1xl">
+                                            Trakasti Remen
+                                        </span>
+                                </div>
+                                <div v-if="item.outside_spanner" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                    <span class="mr-2 text-gray-900">
+                                        <CheckIcon class="w-5" />
+                                    </span>
+                                    <span class="text-1xl">
+                                        Španer Trak. Remena
+                                    </span>
+                                </div>
+                                <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                    <span class="mr-2 text-gray-900">
+                                        <x-icon class="w-5" />
+                                    </span>
+                                    <span class="text-1xl">
+                                        Španer Trak. Remena
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="px-4 pb-4 text-xl">
+                                <div v-if="item.alt_pulley" class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                    <span class="mr-2 text-gray-900">
+                                        <CheckIcon class="w-5" />
+                                    </span>
+                                    <span class="text-1xl">
+                                        Španer Alternatora
+                                    </span>
+                                </div>
+                                <div v-else class="flex items-center p-2 transition-colors hover:bg-black/30">
+                                   <span class="mr-2 text-gray-900">
+                                       <x-icon class="w-5" />
+                                    </span>
+                                    <span class="text-1xl">
+                                        Španer Alternatora
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -328,7 +455,7 @@ import {computed, onMounted, ref} from "vue";
 import store from "../../store/index.js";
 import {useRoute} from "vue-router";
 import Spinner from "../../components/core/Spinner.vue";
-import {PrinterIcon} from "@heroicons/vue/solid";
+import {PrinterIcon, CheckIcon, XIcon} from "@heroicons/vue/solid";
 
 const loading = ref(true);
 const route = useRoute()
