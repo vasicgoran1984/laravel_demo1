@@ -122,6 +122,7 @@ import {OWNERS_PER_PAGE} from "../../constants.js";
 import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
 import {DotsVerticalIcon, PencilIcon, TrashIcon} from '@heroicons/vue/outline'
 import Spinner from "../../components/core/Spinner.vue";
+import router from "../../router/index.js";
 
 const perPage = ref(OWNERS_PER_PAGE);
 const search = ref('');
@@ -170,6 +171,9 @@ function sortOwner(field) {
 
 function editOwner(owner) {
     console.log(owner)
+
+    router.push({name: 'app.owner.edit', params: {owner: owner}})
+
 }
 </script>
 

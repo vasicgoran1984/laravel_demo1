@@ -27,7 +27,7 @@ class OwnerRequest extends FormRequest
             'city'  => ['required'],
             'address' => ['required'],
             'phone' => ['required'],
-            'email' => ['required'],
+//            'email' => ['required'],
         ];
     }
 }

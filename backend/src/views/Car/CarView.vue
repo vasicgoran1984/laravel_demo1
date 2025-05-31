@@ -18,7 +18,7 @@
                         <CustomInput class="mb-2" hidden v-model="car.type_id" />
                         <CustomInput class="mb-2" v-model="car.chassis_number" :errors="errors['chassis_number']" label="Broj Šasije" />
                         <CustomInput class="mb-2" v-model="car.engine_number" :errors="errors['engine_number']" label="Broj Motora"/>
-                        <CustomInput class="mb-2" v-model="car.plate_number" :errors="errors['plate_number']" label="Broj Tablica"/>
+                        <CustomInput class="mb-2" v-model="car.plate_number" label="Broj Tablica"/>
 <!--                        <CustomInput class="mb-2" v-model="car.volume" label="Zapremina Motora"/>-->
 
                         <div class="mt-1">
@@ -170,11 +170,11 @@ function onSubmit() {
             }
 
             // Plate Number
-            if (response.data.errors.plate_number) {
-                response.data.errors.plate_number[0] = 'Broj Tablice je obavezno polje!'
-            } else {
-                response.data.errors.plate_number = '';
-            }
+            // if (response.data.errors.plate_number) {
+            //     response.data.errors.plate_number[0] = 'Broj Tablice je obavezno polje!'
+            // } else {
+            //     response.data.errors.plate_number = '';
+            // }
 
             // Volume
             if (response.data.errors.volume) {

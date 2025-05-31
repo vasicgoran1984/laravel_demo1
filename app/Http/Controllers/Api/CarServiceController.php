@@ -37,6 +37,10 @@ class CarServiceController extends Controller
         $data['description'] = $request->description;
         $data['oil_name'] = $request->oil_name;
 
+        if ($data['oil_name']) {
+            $data['oil'] = 1;
+        }
+
         CarService::create($data);
     }
 

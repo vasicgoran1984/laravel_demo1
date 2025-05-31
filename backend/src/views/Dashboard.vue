@@ -2,7 +2,7 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
         <div class="animate-fade-in-down bg-white rounded-lg shadow flex flex-col items-center justify-center" style="animation-delay: 0.1s">
             <router-link :to="{name: 'app.producer.view'}" class="flex items-center w-full h-full rounded-lg justify-center transition-colors hover:text-white hover:bg-gray-500">
-                <span class="text-3xl">
+                <span class="text-3xl mt-4 mb-4">
                     Vozilo
               </span>
             </router-link>
@@ -16,21 +16,21 @@
             </router-link>
         </div>
 
-        <div class="animate-fade-in-down bg-white rounded-lg shadow flex flex-col items-center justify-center" style="animation-delay: 0.3s">
-            <router-link :to="{name: 'app.orders'}" class="py-10 flex items-center w-full h-full rounded-lg justify-center transition-colors hover:text-white hover:bg-gray-500">
-                <span class="text-3xl">
-                    Nalog
-              </span>
-            </router-link>
-        </div>
+<!--        <div class="animate-fade-in-down bg-white rounded-lg shadow flex flex-col items-center justify-center" style="animation-delay: 0.3s">-->
+<!--            <router-link :to="{name: 'app.orders'}" class="py-10 flex items-center w-full h-full rounded-lg justify-center transition-colors hover:text-white hover:bg-gray-500">-->
+<!--                <span class="text-3xl">-->
+<!--                    Nalog-->
+<!--              </span>-->
+<!--            </router-link>-->
+<!--        </div>-->
 
-        <div class="animate-fade-in-down bg-white rounded-lg shadow flex flex-col items-center justify-center" style="animation-delay: 0.3s">
-            <router-link :to="{name: 'app.orders'}" class="py-10 flex items-center w-full h-full rounded-lg justify-center transition-colors hover:text-white hover:bg-gray-500">
-                <span class="text-3xl">
-                    Servis
-              </span>
-            </router-link>
-        </div>
+<!--        <div class="animate-fade-in-down bg-white rounded-lg shadow flex flex-col items-center justify-center" style="animation-delay: 0.3s">-->
+<!--            <router-link :to="{name: 'app.orders'}" class="py-10 flex items-center w-full h-full rounded-lg justify-center transition-colors hover:text-white hover:bg-gray-500">-->
+<!--                <span class="text-3xl">-->
+<!--                    Servis-->
+<!--              </span>-->
+<!--            </router-link>-->
+<!--        </div>-->
 
     </div>
 

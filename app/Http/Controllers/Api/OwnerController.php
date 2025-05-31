@@ -77,9 +77,12 @@ class OwnerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(OwnerRequest $request, Owner $owner)
     {
-        //
+        $data = $request->validated();
+        $data['email'] = $request->get('email');
+
+        $owner->update($data);
     }
 
     /**

@@ -41,7 +41,7 @@ return new class extends Migration
             $table->boolean('outside_belt')->default(false);
             $table->boolean('outside_spanner')->default(false);
 
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
 
             $table->string('kilometers', 20)->default('0');
             $table->decimal('price', 20, 2);

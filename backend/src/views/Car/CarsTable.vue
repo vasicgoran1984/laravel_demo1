@@ -15,7 +15,7 @@
             <div>
                 <input @change="getCars(null)" v-model="search"
                        class="appearance-none relative block w-48 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                       placeholder="Traži...">
+                       placeholder="Traži po šasiji...">
             </div>
         </div>
         <table class="table-auto w-full">
@@ -42,9 +42,9 @@
                 <TableHeaderCell @click="sortCar" class="border-b p-2 text-left" field="updated_at"
                                  :sort-field="sortField" :sort-direction="sortDirection">Zapremina
                 </TableHeaderCell>
-                <TableHeaderCell field="actions">
-                    Izmijeni Vozilo
-                </TableHeaderCell>
+<!--                <TableHeaderCell field="actions">-->
+<!--                    Izmijeni Vozilo-->
+<!--                </TableHeaderCell>-->
             </tr>
             </thead>
             <tbody v-if="cars.loading">
@@ -76,14 +76,14 @@
                 <td class="border-b p-2">
                     {{car.volume}}
                 </td>
-                <td class="border-b p-2">
-                    <button
-                        :class="['group flex w-full items-center rounded-md px-2 py-2 text-sm']"
-                        @click="editCar(car.id)">
-                        <PencilIcon class="mr-2 h-5 w-5 text-gray-800" aria-hidden="true"/>
-                        <b>Izmijeni</b>
-                    </button>
-                </td>
+<!--                <td class="border-b p-2">-->
+<!--                    <button-->
+<!--                        :class="['group flex w-full items-center rounded-md px-2 py-2 text-sm']"-->
+<!--                        @click="editCar(car.id)">-->
+<!--                        <PencilIcon class="mr-2 h-5 w-5 text-gray-800" aria-hidden="true"/>-->
+<!--                        <b>Izmijeni</b>-->
+<!--                    </button>-->
+<!--                </td>-->
             </tr>
             </tbody>
         </table>

@@ -127,5 +127,7 @@ function onChange(value) {
 </script>
 
 <style scoped>
-
+label {
+    pointer-events: none;
+}
 </style>

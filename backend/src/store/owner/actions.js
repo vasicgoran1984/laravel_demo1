@@ -29,6 +29,12 @@ export function getOwners({commit}, {url = null, search = '', perPage = 10, sort
         })
 }
 
+// Get Owner By Id
 export function getOwner({commit}, id) {
     return axiosClient.get(`/owners/${id}`)
+}
+
+// Update Owner
+export function updateOwner({commit}, owner) {
+    return axiosClient.put(`/owners/${owner.id}`, owner)
 }

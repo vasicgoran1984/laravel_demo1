@@ -27,7 +27,7 @@
 
         <div>
             <div class="flex items-center justify-between">
-                <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
+                <label for="email" class="block text-sm/6 font-medium text-gray-900">Email</label>
             </div>
             <div class="mt-2">
                 <input type="email" name="email" id="email" autocomplete="email" required="" v-model="user.email"
@@ -38,9 +38,9 @@
         <div>
             <div class="flex items-center justify-between">
                 <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
-                <div class="text-sm">
-                    <router-link :to="{name: 'requestPassword'}" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</router-link>
-                </div>
+<!--                <div class="text-sm">-->
+<!--                    <router-link :to="{name: 'requestPassword'}" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</router-link>-->
+<!--                </div>-->
             </div>
             <div class="mt-2">
                 <input type="password" name="password" id="password" autocomplete="current-password" required="" v-model="user.password"
@@ -48,21 +48,21 @@
             </div>
         </div>
 
-        <div class="flex items-center justify-between">
-            <div class="flex items-center">
-                <input id="remember-me" name="remember-me" type="checkbox" v-model="user.remember"
-                       class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"/>
-                <label for="remember-me" class="ml-2 block text-sm text-gray-900"> Remember me </label>
-            </div>
-        </div>
+<!--        <div class="flex items-center justify-between">-->
+<!--            <div class="flex items-center">-->
+<!--                <input id="remember-me" name="remember-me" type="checkbox" v-model="user.remember"-->
+<!--                       class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"/>-->
+<!--                <label for="remember-me" class="ml-2 block text-sm text-gray-900"> Remember me </label>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <div>
             <button type="submit"
                     :disabled="loading"
-                    class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                     :class="{
                   'cursor-not-allowed': loading,
-                  'hover:bg-indigo-500': loading,
+                  'hover:bg-gray-500': loading,
                 }">
                 <svg
                     v-if="loading"
@@ -86,7 +86,7 @@
                     ></path>
                 </svg>
                 <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-              <LockClosedIcon class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true"/>
+              <LockClosedIcon class="h-5 w-5 text-gray-400 group-hover:text-white" aria-hidden="true"/>
             </span>
                 Prijava
             </button>
@@ -94,7 +94,7 @@
     </form>
         <div class="flex items-center justify-between">
             <div class="text-sm">
-                <router-link :to="{name: 'register'}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                <router-link :to="{name: 'register'}" class="font-medium text-gray-600 hover:text-white">
                     Registruj Novog Korisnika
                 </router-link>
             </div>
@@ -127,6 +127,7 @@ function login() {
         router.push({name: 'app.dashboard'})
     })
     .catch(({ response }) => {
+        response.data.message = 'Neispravan email ili password, molimo pokušajte ponovo!'
         errorMsg.value = response.data.message;
         loading.value = false;
     })
