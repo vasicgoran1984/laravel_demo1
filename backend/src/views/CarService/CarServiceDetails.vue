@@ -486,7 +486,7 @@ function printInvoice(car_service_id) {
 function showPdf(item) {
     const userId = currentUser.id
     window.open(
-        `http://localhost:8001/export-pdf/${item}/${userId}`,
+        `https://servisvozila.site/export-pdf/${item}/${userId}`,
         '_blank' // Open in a new window.
     );
 }
