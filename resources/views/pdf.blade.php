@@ -122,7 +122,7 @@
 
 
     <!-- Small Service -->
-{{--    @if($data['service']->oil)--}}
+    @if($data['service']->oil)
         <div class="container-service">
             <span class="flex flex-col font-bold">
                 <span class="text-base"><b>Mali Servis:</b></span>
@@ -235,7 +235,7 @@
                 </div>
             </div>
         </div>
-{{--    @endif--}}
+    @endif
 
     <!-- Big Service -->
     @if($data['service']->belt)

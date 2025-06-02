@@ -40,7 +40,6 @@
                 <Spinner class="my-4" />
             </div>
         </div>
-
     </div>
 
     <div class="bg-white px-4 pt-5 pb-4 py-2 mt-2">
@@ -202,8 +201,6 @@ function showBrakeService() {
 
 
 function onSubmit() {
-    // carService.value.oil = !!carService.value.oil
-    // carService.value.oil_filter = !!carService.value.oil_filter
 
     store.dispatch('carService/createCarService', carService.value)
         .then(response => {

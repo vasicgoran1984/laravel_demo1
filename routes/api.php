@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\TypeController;
+use App\Http\Controllers\Api\CarServiceController;
 
 
 //Route::get('/user', function (Request $request) {
@@ -86,11 +87,13 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::put('/insertKilometers/{book_id}', [\App\Http\Controllers\Api\BookServiceController::class, 'insertKilometers']);
 
     // Car Service
-    Route::apiResource('carService', \App\Http\Controllers\Api\CarServiceController::class);
-
+    Route::apiResource('carService', CarServiceController::class);
     // Show All Services By Book Service ID
-    Route::get('show-all-services/{book_id}', [\App\Http\Controllers\Api\CarServiceController::class, 'showAllServices']);
-
+    Route::get('show-all-services/{book_id}', [CarServiceController::class, 'showAllServices']);
+    // Show Today's Services
+    Route::get('/show-today-services', [CarServiceController::class, 'showTodayServices']);
+    // Show Car Service By Id
+    Route::get('show-service/{service_id}', [CarServiceController::class, 'showCarServiceById']);
 });
 
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
