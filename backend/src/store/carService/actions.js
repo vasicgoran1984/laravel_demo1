@@ -57,6 +57,11 @@ export function showAllCarServicesByBookId({commit}, book_id) {
 return axiosClient.get(`show-all-services/${book_id}`)
 }
 
+// Show Car Service By Serivce Id
+export function showCarServiceById({commit}, service_id) {
+    return axiosClient.get(`show-service/${service_id}`)
+}
+
 // Print Invoice
 export function printInvoice({commit}, car_service_id) {
 return axiosClient.get(`export-invoice/${car_service_id}`)

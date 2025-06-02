@@ -40,9 +40,6 @@
                                  :sort-field="sortField" :sort-direction="sortDirection">E-mail
                 </TableHeaderCell>
                 <TableHeaderCell field="actions">
-                    Servisna Knjiga
-                </TableHeaderCell>
-                <TableHeaderCell field="actions">
                     Dodaj Vozilo
                 </TableHeaderCell>
             </tr>
@@ -72,15 +69,6 @@
                 </td>
                 <td class="border-b p-2">
                     {{owner.email}}
-                </td>
-                <td class="border-b p-2">
-                    <div v-for="carOwner of owner.car_owner">
-                        <router-link :to="{name: 'app.BookService.view', params: {owner_id: owner.id, car_id: carOwner.car_id}}" class="['group flex w-full items-center rounded-md px-2 py-2 text-sm']">
-                            <ClipboardIcon class="mr-2 h-5 w-5 text-gray-800" aria-hidden="true"/>
-                            {{carOwner}}
-                        </router-link>
-
-                    </div>
                 </td>
                 <td class="border-b p-2">
                     <router-link :to="{name: 'app.addCarOwner.view', params: {id: owner.id}}" class="['group flex w-full items-center rounded-md px-2 py-2 text-sm']">

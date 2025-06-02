@@ -73,7 +73,6 @@ class PdfController extends Controller
 
     public function exportPdf($serviceId, $userId)
     {
-
         $data['user'] = User::query()
             ->select(['U.id', 'U.first_name', 'U.last_name', 'U.email', 'S.name_service', 'S.city', 'S.address', 'S.phone'])
             ->from('users as U')
@@ -87,20 +86,9 @@ class PdfController extends Controller
         $data['producer'] = Producer::where('id', '=', $data['type']['producer_id'])->first();
         $data['owner'] = Owner::where('id', '=', $data['bookService']['owner_id'])->first();
 
-//        $data['user'] = [
-//            'name' => 'Ime',
-//        ];
-
-//        echo '<pre>';
-//        print_r($data['service']);
-//        echo '</pre>';
-//        dd('x');
-
         $pdf = Pdf::loadView('pdf', compact('data'));
 
         return $pdf->stream();
-
-        //return view('export-pdf', compact('data'));
 
     }
 }

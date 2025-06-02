@@ -33,7 +33,7 @@
         <PencilIcon class="w-5" />
       </span>
             <span class="text-1xl">
-        Vlasnisi Vozila
+        Vlasnici Vozila
       </span>
         </router-link>
         <router-link :to="{name: 'app.bookService'}"
@@ -42,7 +42,7 @@
             <BookOpenIcon class="w-5" />
           </span>
             <span class="text-1xl">
-            Lista S. Knjiga
+            Servisne Knjige
           </span>
         </router-link>
 <!--        <router-link :to="{name: 'app.cars'}"-->
