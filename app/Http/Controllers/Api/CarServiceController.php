@@ -10,6 +10,7 @@ use App\Models\CarService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Enums\ServiceName;
 
 class CarServiceController extends Controller
 {
@@ -36,13 +37,30 @@ class CarServiceController extends Controller
     {
         $data = $request->validated();
         $user = Auth()->user();
+
         $data['service_id'] = $user->service->id;
         $data['description'] = $request->description;
         $data['oil_name'] = $request->oil_name;
 
         if ($data['oil_name']) {
             $data['oil'] = 1;
+            $data['small_service_name'] = ServiceName::smallService->value;
         }
+
+        if ($data['belt']) {
+            $data['big_service_name'] = ServiceName::bigService->value;
+        }
+
+        if ($data['brake_pads_front'] || $data['brake_pads_rear']) {
+            $data['brakes_service_name'] = ServiceName::brakes->value;
+        }
+
+//        echo '<pre>';
+//        print_r(ServiceName::smallService->value);
+//        print_r(ServiceName::smallService);
+//        print_r($data);
+//        echo '</pre>';
+//        die('ff');
 
         CarService::create($data);
     }
@@ -111,5 +129,24 @@ class CarServiceController extends Controller
     public function showCarServiceById($service_id)
     {
         return CarService::where('id', '=', $service_id)->get();
+    }
+
+    public function countCarServiceByDate()
+    {
+        $user = Auth()->user();
+        $service_id = $user->service->id;
+
+        $query = CarService::query()
+            ->select(['CS.small_service_name as small_service',
+                      'CS.big_service_name as big_service',
+                      'CS.brakes_service_name as brake_service',
+                      DB::raw('count(CS.id) as count')])
+            ->from('car_services as CS')
+            ->where([
+                ['CS.service_id', $service_id],
+                ['CS.created_at', '>=', Carbon::today()],
+            ])->groupBy('CS.small_service_name', 'CS.big_service_name', 'CS.brakes_service_name')->get();
+
+        return $query;
     }
 }

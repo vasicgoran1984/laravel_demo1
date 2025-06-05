@@ -94,6 +94,8 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/show-today-services', [CarServiceController::class, 'showTodayServices']);
     // Show Car Service By Id
     Route::get('show-service/{service_id}', [CarServiceController::class, 'showCarServiceById']);
+    // Count Car Service by Day/Time
+    Route::get('/count-car-service-date', [CarServiceController::class, 'countCarServiceByDate']);
 });
 
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
