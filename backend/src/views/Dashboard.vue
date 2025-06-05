@@ -38,8 +38,8 @@
         <div class="col-span-1 md:col-span-2 row-span-1 md:row-span-2 bg-white py-6 px-5 rounded-lg shadow">
             <label class="text-lg font-semibold block mb-2">Današnji Servisi</label>
             <template v-if="!loading.todayService">
-                <div v-if="todayServices" >
-                    <div v-for="service of todayServices" :key="service.id" class="py-2 px-3 hover:bg-gray-50">
+                <div v-if="todayServices.length">
+                    <div v-for="service of todayServices" :key="service.id" class="py-2 px-3 hover:bg-gray-50 border-b-2">
                         <p>
                         <span class="text-gray-700 py-2 px-2 rounded">
                             <b>Vozilo:</b> {{ service.producer_name }} {{ service.type_name }}
@@ -67,17 +67,44 @@
             </template>
             <Spinner v-else text="" />
         </div>
+
+        <div class="col-span-1 md:col-span-2 row-span-1 md:row-span-2 bg-white py-6 px-5 rounded-lg shadow">
+            <label class="text-lg font-semibold block mb-2">Statistika</label>
+
+            <div class="grid grid-cols-1 py-3 md:grid-cols-1 gap-3">
+                <!-- Doughnut Chart -->
+                <div class="bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center">
+<!--                    <label class="text-lg font-semibold block mb-2">Po Danu</label>-->
+                    <template v-if="!loading.countCarService">
+                        <DoughnutChart :chart-data="countCarService" :options="options" css-classes="chart-container" />
+                    </template>
+                    <Spinner v-else text="" class="" />
+                </div>
+                <!--/ Doughnut Chart -->
+
+                <!-- Bar Chart -->
+<!--                <div class="bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center">-->
+<!--                    <label class="text-lg font-semibold block mb-2">Po Danu</label>-->
+<!--                    <template v-if="!loading.countCarService">-->
+<!--                        <BarChart :chart-data="countCarService" :options="options" css-classes="chart-container" />-->
+<!--                    </template>-->
+<!--                    <Spinner v-else text="" class="" />-->
+<!--                </div>-->
+                <!--/ Bar Chart -->
+            </div>
+        </div>
     </div>
 
 </template>
 
 <script setup>
 
-import {computed, onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 import {Chart, BarController, CategoryScale, LinearScale, BarElement, DoughnutController, ArcElement} from "chart.js";
 import Spinner from "../components/core/Spinner.vue";
 import store from "../store/index.js";
 import axiosClient from "../axios.js";
+import {DoughnutChart} from "vue-chart-3";
 
 Chart.register(BarController, CategoryScale, LinearScale, BarElement, DoughnutController, ArcElement)
 
@@ -85,11 +112,21 @@ Chart.register(BarController, CategoryScale, LinearScale, BarElement, DoughnutCo
 const user = store.state.user.user.data;
 const service = ref({});
 const todayServices = ref([]);
+const countCarService = ref([]);
 
 const loading = ref({
-    serviceName: true,
     todayService: true,
+    countCarService: true,
 });
+
+const options = ref({
+    plugins: {
+        title: {
+            text: ""
+        }
+    }
+})
+
 
 onMounted(() => {
     store.dispatch('service/getService', user.id)
@@ -99,7 +136,9 @@ onMounted(() => {
                 service.value = data;
                 loading.value.todayService = false;
             }
-        })
+        }).finally(
+            loading.value.todayService = false
+    )
 
     // Show Today's Service
     updateDashboard();
@@ -109,6 +148,7 @@ function updateDashboard() {
 
     loading.value = {
         todayService: true,
+        countCarService: true,
     };
 
     // Show today's Services in Dashboard
@@ -118,6 +158,33 @@ function updateDashboard() {
             loading.value.todayService = false;
         })
 
+    // Show Count of Car Service by Date
+    axiosClient.get(`/count-car-service-date`).then(({ data: services }) => {
+        const chartData = {
+            labels: [],
+            datasets: [{
+                backgroundColor: ['#a85e0b', '#b5b5b5', '#10a332', '#ea900c'],
+                data: []
+            }]
+        }
+        services.forEach(c => {
+            if(c.small_service) {
+                chartData.labels.push(c.small_service);
+            }
+            if(c.big_service) {
+                chartData.labels.push(c.big_service);
+            }
+            if(c.brake_service) {
+                chartData.labels.push(c.brake_service);
+            }
+            chartData.datasets[0].data.push(c.count);
+        })
+
+        console.log(chartData)
+
+        countCarService.value = chartData;
+        loading.value.countCarService = false;
+    })
 }
 
 </script>

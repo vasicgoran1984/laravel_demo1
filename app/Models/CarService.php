@@ -9,6 +9,9 @@ class CarService extends Model
     protected $fillable = [
         'book_service_id',
         'service_id',
+        'small_service_name',
+        'big_service_name',
+        'brakes_service_name',
         'oil',
         'oil_name',
         'oil_filter',

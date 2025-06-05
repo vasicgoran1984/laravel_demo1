@@ -24,7 +24,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
 //            ProductSeeder::class,
 //            CountrySeeder::class,
-//            ProducerSeeder::class,
+            ProducerSeeder::class,
+            CarSeeder::class,
+            FuelSeeder::class,
+            TransmissionSeeder::class,
         ]);
     }
 }
