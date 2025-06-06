@@ -27,9 +27,10 @@ class DBBackup extends Command
      */
     public function handle()
     {
-        // Backup Not Working
+        // Backup DB
+        info(now());
 
-        $path = Storage::path("/Laravel/".now()->format("d-m-Y-H-i-s").".gz");
+        $path = Storage::path("/BackupDB/".now()->format("d-m-Y-H-i-s").".gz");
 
         $command = "mysqldump --user=".env('DB_USERNAME')." --password=".env('DB_PASSWORD')." --host=". env('DB_HOST')." ".env('DB_DATABASE'). " | gzip > ". $path;
 
