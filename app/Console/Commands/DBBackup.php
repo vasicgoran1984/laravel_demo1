@@ -29,15 +29,15 @@ class DBBackup extends Command
     {
         // Backup Not Working
 
-//        $path = Storage::path("/backup/".now()->format("d-m-Y-H-i-s").".gz");
-//
-//        $command = "mysqldump --user=".env('DB_USERNAME')." --password=".env('DB_PASSWORD')." --host=". env('DB_HOST')." ".env('DB_DATABASE'). " | gzip > ". $path;
-//
-//        $process = Process::run($command);
-//
-//        if ($process->successful()) {
-//            $this->info('Database backup saved as:' . basename($path));
-//        }
+        $path = Storage::path("/Laravel/".now()->format("d-m-Y-H-i-s").".gz");
+
+        $command = "mysqldump --user=".env('DB_USERNAME')." --password=".env('DB_PASSWORD')." --host=". env('DB_HOST')." ".env('DB_DATABASE'). " | gzip > ". $path;
+
+        $process = Process::run($command);
+
+        if ($process->successful()) {
+            $this->info('Database backup saved as:' . basename($path));
+        }
 
     }
 }
