@@ -55,13 +55,6 @@ class CarServiceController extends Controller
             $data['brakes_service_name'] = ServiceName::brakes->value;
         }
 
-//        echo '<pre>';
-//        print_r(ServiceName::smallService->value);
-//        print_r(ServiceName::smallService);
-//        print_r($data);
-//        echo '</pre>';
-//        die('ff');
-
         CarService::create($data);
     }
 
@@ -84,9 +77,33 @@ class CarServiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CarServiceRequest $request, CarService $carService)
     {
-        //
+        $data = $request->validated();
+
+        $data['description'] = $request->description;
+        $data['oil_name'] = $request->oil_name;
+
+        if ($data['oil_name']) {
+            $data['oil'] = 1;
+            $data['small_service_name'] = ServiceName::smallService->value;
+        } else {
+            $data['oil'] = 0;
+        }
+
+        if ($data['belt']) {
+            $data['big_service_name'] = ServiceName::bigService->value;
+        } else {
+            $data['big_service_name'] = '';
+        }
+
+        if ($data['brake_pads_front'] || $data['brake_pads_rear']) {
+            $data['brakes_service_name'] = ServiceName::brakes->value;
+        } else {
+            $data['brakes_service_name'] = '';
+        }
+
+        $carService->update($data);
     }
 
     /**
@@ -97,9 +114,10 @@ class CarServiceController extends Controller
         //
     }
 
+    // Show All Services
     public function showAllServices($book_id)
     {
-        $carService = CarService::where('book_service_id', '=', $book_id)->get();
+        $carService = CarService::with('mechanic')->where('book_service_id', '=', $book_id)->get();
         return $carService;
     }
 

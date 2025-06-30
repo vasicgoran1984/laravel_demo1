@@ -99,13 +99,10 @@ function onSubmit() {
     loading.value = true;
 
     if (customer.value.id) {
-        console.log(customer.value.status)
         customer.value.status = !!customer.value.status
         store.dispatch('customer/updateCustomer', customer.value)
             .then(response => {
                 loading.value = false
-                console.log('xxf');
-                console.log(customer.value);
                 if (response.status === 200) {
                     // Show notify
                     store.dispatch('customer/getCustomer', customer.value.id)

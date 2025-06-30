@@ -55,9 +55,9 @@ const route = useRoute()
 
 const errors = ref({});
 const owner = ref({});
+const loading = ref(true);
 
 onMounted(() => {
-    console.log(route.params.owner)
     const id = route.params.owner
     store.dispatch('owner/getOwner', id)
         .then(({data}) => {

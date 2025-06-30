@@ -32,21 +32,24 @@
         </div>
     </div>
 
-    <div class="justify-between mb-3 bg-white">
+    <div class="justify-between mb-3">
 
         <div v-if="carServices" class="px-4 pt-5 pb-4 py-2 mt-2">
-            <div v-for="item of carServices" class="w-full">
+            <div v-for="item of carServices" class="w-full mb-4 animate-fade-in-down bg-white shadow flex flex-col">
 
                     <div class="justify-between mb-3"
                          v-if="item.oil === 1"
                     >
                         <div class="text-2xl bg-blue-500 w-full font-bold p-2 text-white flow-root">
                                 <div class="float-left">
-                                    <h3>Mali Servis | Kilometri: {{item.kilometers}}</h3>
+                                    <h3>Mali Servis | Kilometri: {{item.kilometers}} | Datum: {{dateFormat(item.created_at)}}</h3>
                                 </div>
                                 <div class="float-right">
                                     <button @click="showPdf(item.id)">
-                                        <PrinterIcon class="text-3xl size-8 mr-2 h-5 w-5 text-white" aria-hidden="true"/>
+                                        <PrinterIcon class="text-3xl size-8 mr-6 h-5 w-5 text-white" aria-hidden="true"/>
+                                    </button>
+                                    <button @click="editService(item.id)">
+                                        <PencilIcon class="text-3xl size-8 mr-2 h-5 w-5 text-white" aria-hidden="true"/>
                                     </button>
                                 </div>
                         </div>
@@ -167,11 +170,14 @@
                     >
                         <div class="text-2xl bg-green-500 w-full font-bold p-2 text-white flow-root">
                             <div class="float-left">
-                                <h3>Kočnice | Kilometri: {{item.kilometers}}</h3>
+                                <h3>Kočnice | Kilometri: {{item.kilometers}} | Datum: {{dateFormat(item.created_at)}}</h3>
                             </div>
                             <div class="float-right">
                                 <button @click="showPdf(item.id)">
-                                    <PrinterIcon class="text-3xl size-8 mr-2 h-5 w-5 text-white" aria-hidden="true"/>
+                                    <PrinterIcon class="text-3xl size-8 mr-6 h-5 w-5 text-white" aria-hidden="true"/>
+                                </button>
+                                <button @click="editService(item.id)">
+                                    <PencilIcon class="text-3xl size-8 mr-2 h-5 w-5 text-white" aria-hidden="true"/>
                                 </button>
                             </div>
                         </div>
@@ -333,11 +339,14 @@
                 >
                     <div class="text-2xl bg-orange-500 w-full font-bold p-2 text-white flow-root">
                         <div class="float-left">
-                            <h3>Veliki Servis | Kilometri: {{item.kilometers}}</h3>
+                            <h3>Veliki Servis | Kilometri: {{item.kilometers}} | Datum: {{dateFormat(item.created_at)}}</h3>
                         </div>
                         <div class="float-right">
                             <button @click="showPdf(item.id)">
-                                <PrinterIcon class="text-3xl size-8 mr-2 h-5 w-5 text-white" aria-hidden="true"/>
+                                <PrinterIcon class="text-3xl size-8 mr-6 h-5 w-5 text-white" aria-hidden="true"/>
+                            </button>
+                            <button @click="editService(item.id)">
+                                <PencilIcon class="text-3xl size-8 mr-2 h-5 w-5 text-white" aria-hidden="true"/>
                             </button>
                         </div>
                     </div>
@@ -470,6 +479,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="text-2xl w-full pb-4">
+                    <div  v-if="item.mechanic && item.mechanic.first_name != null" class="flex flex-row">
+                        <span class="text-xl ml-2"><b>Serviser:</b></span>
+                        <h4 class="text-xl ml-4">{{item.mechanic.first_name}} {{item.mechanic.last_name}}</h4>
+                    </div>
+                    <div class="flex flex-row">
+                        <span class="text-xl ml-2"><b>Napomena:</b></span>
+                        <h4 class="text-xl ml-4">{{item.description}}</h4>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div v-else class="w-full">
@@ -482,11 +502,13 @@
 <script setup>
 
 
-import {computed, onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 import store from "../../store/index.js";
 import {useRoute} from "vue-router";
 import Spinner from "../../components/core/Spinner.vue";
-import {PrinterIcon, CheckIcon, XIcon} from "@heroicons/vue/solid";
+import {CheckIcon, PencilIcon, PrinterIcon, XIcon} from "@heroicons/vue/solid";
+import router from "../../router/index.js";
+import moment from "moment";
 
 const loading = ref(true);
 const route = useRoute()
@@ -512,6 +534,10 @@ function showAllCarServices() {
             loading.value = false;
             carServices.value = data;
         })
+}
+
+function dateFormat(date) {
+    return moment(date).format('DD-MM-YYYY');
 }
 
 function showPdf(item) {
@@ -562,6 +588,11 @@ function showOwnerCar() {
         "en-GB",
         {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}
     ));
+}
+
+// Edit Service
+function editService(service) {
+    router.push({name: 'app.service.edit', params: {service: service}})
 }
 
 </script>

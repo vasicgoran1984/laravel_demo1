@@ -5,6 +5,11 @@ export function createCarService({commit}, carService) {
     return axiosClient.post('/carService', carService)
 }
 
+// Update Car Service
+export function updateCarService({commit}, carService) {
+    return axiosClient.put(`/carService/${carService.id}`, carService)
+}
+
 // Get All Cars
 export function getCarServices({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction, service} = {}) {
     if (sort_field === 'updated_at') {

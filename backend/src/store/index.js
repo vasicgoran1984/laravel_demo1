@@ -15,6 +15,7 @@ import owner from './owner/ownerModule.js'
 import ownerCars from "./ownerCars/ownerCarsModule.js";
 import bookService from "./bookService/bookServiceModule.js";
 import carService from "./carService/carServiceModule.js";
+import mechanic from "./mechanic/mechanicModule.js";
 
 const store = createStore({
     modules: {
@@ -34,6 +35,7 @@ const store = createStore({
         ownerCars,
         bookService,
         carService,
+        mechanic,
     }
 })
 

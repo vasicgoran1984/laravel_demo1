@@ -7,10 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BookServiceRequest;
 use App\Http\Resources\BookSerListResource;
 use App\Http\Resources\BookServiceListResource;
+use App\Mail\CarServiceMail;
 use App\Models\BookService;
 use App\Models\Car;
+use App\Models\CarService;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class BookServiceController extends Controller
 {
@@ -28,7 +32,7 @@ class BookServiceController extends Controller
         $service = $user->service->id;
 
         $query = BookService::query()
-            ->select(['BS.id', 'BS.car_id', 'BS.owner_id', 'C.chassis_number', 'O.first_name', 'O.last_name', 'O.city', 'T.name as type_name', 'P.name as producer_name', 'O.updated_at'])
+            ->select(['BS.id', 'BS.car_id', 'BS.owner_id', 'C.chassis_number', 'O.first_name', 'O.last_name', 'O.email', 'O.city', 'T.name as type_name', 'P.name as producer_name', 'O.updated_at'])
             ->from('book_services as BS')
             ->join('cars as C', 'C.id', '=','BS.car_id')
             ->join('types as T', 'T.id', '=','C.type_id')
@@ -45,9 +49,6 @@ class BookServiceController extends Controller
 
         return new BookSerListResource($query->paginate($perPage));
 
-//        return response([
-//            'data' => BookServiceListResource::collection($query->paginate($perPage)),
-//        ], 200);
     }
 
     /**
@@ -126,10 +127,57 @@ class BookServiceController extends Controller
         return $query->first();
     }
 
+    // Insert kilometers in new Book Service
     public function insertKilometers($id, Request $request)
     {
-//        return $request->km;
-//        dd($id);
-        $bookService = BookService::where('id', '=', $id)->update(['kilometers' => $request->km]);
+        BookService::where('id', '=', $id)->update(['kilometers' => $request->km]);
+    }
+
+    // Get Car Service By ID
+    public function getCarService($service)
+    {
+        $carService = CarService::query()
+            ->from('car_services as CS')
+            ->where('CS.id', '=', $service)->first();
+
+        $bookService = $this->lastBookService($carService['book_service_id']);
+
+        return response([
+            'carService' => $carService,
+            'bookService' => $bookService,
+        ]);
+    }
+
+    // Send Book Service via Email
+    public function sendBookServiceEmail($id)
+    {
+        $baseUrl = url('/');
+
+        $bookService = BookService::query()
+            ->select(['BS.id', 'P.name as producer_name', 'C.plate_number', 'T.name as type_name', 'C.chassis_number', 'BS.date', 'BS.kilometers', 'O.first_name', 'O.last_name', 'O.city', 'O.phone', 'O.email'])
+            ->from('book_services as BS')
+            ->join('cars as C', 'C.id', '=', 'BS.car_id')
+            ->join('types as T', 'T.id', '=', 'C.type_id')
+            ->join('producers as P', 'P.id', '=', 'T.producer_id')
+            ->join('owners as O', 'O.id', '=', 'BS.owner_id')
+            ->where('BS.id', '=', $id)->first();
+
+
+        $toEMail = $bookService['email'];
+        $data['message'] = 'Servisnu knjigu možete vidjeti klikom na link:';
+        $data['link'] = $baseUrl . '/' . 'auto-servis/' . $id;
+        $data['bookService'] = $bookService;
+        $subject = 'Servisna Knjiga' . ' - ' . $bookService['producer_name'] . ' ' . $bookService['type_name'];
+
+        Mail::to($toEMail)->send(new CarServiceMail($data, $subject));
+
+    }
+
+    // Show Book Service to Client
+    public function showClientBookServices($bookId)
+    {
+        $carServices = CarService::with('mechanic')->where('book_service_id', '=', $bookId)->get();
+
+        return view('mail.car-service', compact('carServices'));
     }
 }

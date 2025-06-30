@@ -94,7 +94,7 @@ import {
 import Spinner from "../../components/core/Spinner.vue";
 import store from "../../store/index";
 import CustomInput from "../../components/core/CustomImput.vue";
-import Combobox from "../../components/core/Table/Combobox.vue";
+import Combobox from "../CarService/Combobox.vue";
 
 const loading = ref(false);
 const errors = ref({});

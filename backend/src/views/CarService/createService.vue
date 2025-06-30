@@ -45,12 +45,17 @@
     <div class="bg-white px-4 pt-5 pb-4 py-2 mt-2">
 
         <form @submit.prevent="onSubmit">
+
+            <div class="top-16 w-72 pb-8">
+                <label class="ml-2 text-gray-600">Serviser</label>
+                <Combobox v-model:modValue="selectedMechanic" :errors="errors['mechanic_id']" />
+            </div>
+
             <div v-if="smallService">
                 <h1 class="text-2xl bg-blue-500 font-semibold pb-2 pt-2 text-white pl-3">{{ smallSTitle }}</h1>
                 <div class="bg-white px-4 pt-5 pb-4">
                     <div class="grid grid-cols-1 md:grid-cols-6 gap-2">
                         <CustomInput class="mb-2" v-model="carService.oil_name" label="Naziv Ulja" />
-<!--                        <CustomInput type="checkbox" class="mb-2" v-model="carService.oil" label="Ulje"/>-->
                         <CustomInput id="oil_filter" type="checkbox" name="oil_filter" class="mb-2" v-model="carService.oil_filter" label="Filter Ulja"/>
                         <CustomInput type="checkbox" name="air_filter" class="mb-2" v-model="carService.air_filter" label="Filter Vazduha"/>
                         <CustomInput id="inner_filter" type="checkbox" name="inner_filter" class="mb-2" v-model="carService.inner_filter" label="Filter Kabine"/>
@@ -92,7 +97,7 @@
             <div class="bg-white px-4 pt-5 pb-4 mt-6">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
                     <CustomInput class="mb-2 text-gray-700" v-model="carService.kilometers" :errors="errors['kilometers']" label="Unesite Kilometre...." />
-                    <CustomInput v-model="currentDate.value" class="mb-2 text-gray-700" label="Datum" />
+                    <CustomInput :disabled="true" v-model="currentDate.value" class="mb-2 text-gray-700" label="Datum" />
                     <CustomInput class="mb-2 text-gray-700" v-model="carService.price" :errors="errors['price']" label="Unesite Cijenu" />
 
                     <button class="h-10 mt-1 text-lg text-white transition-colors duration-150 bg-gray-500 rounded-lg focus:shadow-outline hover:bg-gray-800">
@@ -114,6 +119,7 @@ import {useRoute} from "vue-router";
 import Spinner from "../../components/core/Spinner.vue";
 import CustomInput from "../../components/core/CustomImput.vue";
 import router from "../../router/index.js";
+import Combobox from "./Combobox.vue";
 
 const carTitle = ref('');
 const smallSTitle = ref('');
@@ -129,6 +135,7 @@ const brakeService = ref(false);
 const currentDate = ref('');
 const route = useRoute();
 const errors = ref({});
+const selectedMechanic = ref(null)
 
 const carService = ref({
     book_service_id: route.params.book_id,
@@ -156,6 +163,7 @@ const carService = ref({
     description: '',
     kilometers: '',
     price: '',
+    mechanic_id: '',
 });
 
 onMounted(() => {
@@ -201,11 +209,12 @@ function showBrakeService() {
 
 
 function onSubmit() {
+    carService.value.mechanic_id = selectedMechanic.value?.id || null;
 
     store.dispatch('carService/createCarService', carService.value)
         .then(response => {
             store.commit('toast/showToast', `Servis Vozila Sačuvan!`)
-            router.push({name: 'app.bookService'})
+            router.push({name: 'app.CarServiceDetails', params: {book_id: route.params.book_id}})
         })
         .catch(({ response }) => {
             // Kilometers
@@ -220,6 +229,11 @@ function onSubmit() {
                 response.data.errors.price[0] = 'Cijena je Obavezno polje!'
             } else {
                 response.data.errors.price = '';
+            }
+
+            // Mechanic
+            if (response.data.errors.mechanic_id) {
+                response.data.errors.mechanic_id[0] = 'Izaberite Servisera!'
             }
             errors.value = response.data.errors
         })

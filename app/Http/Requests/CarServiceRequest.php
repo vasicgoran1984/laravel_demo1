@@ -25,6 +25,7 @@ class CarServiceRequest extends FormRequest
             'book_service_id' => ['required'],
 //            'oil' => ['required'],
 //            'oil_name' => ['required'],
+            'mechanic_id' => ['required'],
             'oil_filter' => ['required'],
             'air_filter' => ['required'],
             'inner_filter' => ['required'],

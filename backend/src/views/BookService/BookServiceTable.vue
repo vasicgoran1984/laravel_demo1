@@ -45,6 +45,9 @@
                 <TableHeaderCell field="actions">
                     Detalji
                 </TableHeaderCell>
+                <TableHeaderCell field="actions">
+                    Email
+                </TableHeaderCell>
             </tr>
             </thead>
             <tbody v-if="!loading">
@@ -93,6 +96,19 @@
                         @click="showServisByBookId(book.id)">
                         <EyeIcon class="mr-2 h-5 w-5 text-gray-800" aria-hidden="true"/>
                         <b>Pogledaj</b>
+                    </button>
+                </td>
+                <td class="border-b p-2">
+                    <button
+                        :disabled="!book.email"
+                        :class="[
+                            'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                            !book.email ? 'bg-gray-300 text-white cursor-not-allowed' : 'bg-gray-5' +
+                             '00 text-white hover:bg-gray-600 hover:text-white'
+                        ]"
+                        @click="sendBookServiceEmail(book.id)">
+                        <MailIcon class="mr-2 h-5 w-5 text-gray-800 text-white" aria-hidden="true"/>
+                        <b>Pošalji</b>
                     </button>
                 </td>
             </tr>
@@ -144,8 +160,9 @@ import {computed, onMounted, ref} from "vue";
 import {BOOK_S_PER_PAGE} from "../../constants.js";
 import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
 import Spinner from "../../components/core/Spinner.vue";
-import {EyeIcon, KeyIcon} from "@heroicons/vue/outline";
+import {EyeIcon, KeyIcon, MailIcon} from "@heroicons/vue/outline";
 import router from "../../router/index.js";
+import axiosClient from "../../axios.js";
 
 
 const perPage = ref(BOOK_S_PER_PAGE);
@@ -202,6 +219,17 @@ function sortServiceBook(field) {
 // Show All Services By Book Service ID
 function showServisByBookId(book_id) {
     router.push({name: 'app.CarServiceDetails', params: {book_id: book_id}})
+}
+
+// Send Book Service
+function sendBookServiceEmail(book_id) {
+    axiosClient.get(`sendBookServiceEmail/${book_id}`)
+        .then(() => {
+            store.commit('toast/showToast', `Email uspješno poslan!!`)
+        })
+        .catch(() => {
+            store.commit('toast/showToast', `Greška prilikom slanja emaila!!`)
+        })
 }
 
 // Create a New Service

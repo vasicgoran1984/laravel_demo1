@@ -79,14 +79,15 @@ class PdfController extends Controller
             ->join('services as S', 'U.id', '=', 'S.user_id')
             ->where('U.id', '=', $userId)->first();
 
-        $data['service'] = CarService::where('id', '=', $serviceId)->first();
+        $data['service'] = CarService::with('mechanic')->where('id', '=', $serviceId)->first();
         $data['bookService'] = BookService::where('id', '=', $data['service']['book_service_id'])->first();
         $data['car'] = Car::where('id', '=', $data['bookService']['car_id'])->first();
         $data['type'] = Type::where('id', '=', $data['car']['type_id'])->first();
         $data['producer'] = Producer::where('id', '=', $data['type']['producer_id'])->first();
         $data['owner'] = Owner::where('id', '=', $data['bookService']['owner_id'])->first();
 
-        $pdf = Pdf::loadView('pdf', compact('data'));
+        $pdf = Pdf::loadView('pdf', compact('data'))
+                    ->setOptions(['isHtml5ParserEnabled' => true, 'isPhpEnabled' => true]);
 
         return $pdf->stream();
 

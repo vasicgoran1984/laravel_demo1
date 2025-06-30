@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\Api\CarServiceController;
+use App\Http\Controllers\Api\MechanicController;
 
 
 //Route::get('/user', function (Request $request) {
@@ -59,6 +60,11 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::apiResource('service', \App\Http\Controllers\Api\ServiceController::class);
     Route::get('/service/service-id/{id}', [ServiceController::class, 'serviceByServiceId']);
 
+    // Mechanic
+    Route::apiResource('/mechanic', MechanicController::class);
+    // Get All Mechanics
+    Route::get('/get-all-mechanics', [MechanicController::class, 'getAllMechanics']);
+
     // Producer
     Route::apiResource('producer', \App\Http\Controllers\Api\ProducerController::class);
 
@@ -85,6 +91,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 
     Route::get('/lastBookService/{book_id}', [\App\Http\Controllers\Api\BookServiceController::class, 'lastBookService']);
     Route::put('/insertKilometers/{book_id}', [\App\Http\Controllers\Api\BookServiceController::class, 'insertKilometers']);
+    Route::get('/sendBookServiceEmail/{book_id}', [\App\Http\Controllers\Api\BookServiceController::class, 'sendBookServiceEmail']);
 
     // Car Service
     Route::apiResource('carService', CarServiceController::class);
@@ -96,6 +103,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('show-service/{service_id}', [CarServiceController::class, 'showCarServiceById']);
     // Count Car Service by Day/Time
     Route::get('/count-car-service-date', [CarServiceController::class, 'countCarServiceByDate']);
+    Route::get('/getCarService/{service}', [\App\Http\Controllers\Api\BookServiceController::class, 'getCarService']);
 });
 
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);

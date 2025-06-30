@@ -55,6 +55,7 @@ class OwnerController extends Controller
         $user = Auth()->user();
         $data = $request->validated();
         $data['service_id'] = $user->service->id;
+        $data['email'] = $request->get('email');
         Owner::create($data);
     }
 

@@ -86,7 +86,10 @@ const props = defineProps({
         default: ''
     },
     selectOptions: Array,
-    disabled: Boolean,
+    disabled: {
+        type: Boolean,
+        default: false
+    },
     errors: {
         type: Array,
         required: false
