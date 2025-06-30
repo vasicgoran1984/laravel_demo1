@@ -36,7 +36,7 @@
 
     {{--Big Service--}}
     @if($carServices->contains(function($item) {
-        return empty($item->big_service_name);
+        return !empty($item->big_service_name);
     }))
         @foreach($carServices as $service)
             @if(!empty($service->big_service_name))
@@ -60,7 +60,7 @@
 
     {{--Brakes Service--}}
     @if($carServices->contains(function($item) {
-        return empty($item->brakes_service_name);
+        return !empty($item->brakes_service_name);
     }))
         @foreach($carServices as $service)
             @if(!empty($service->brakes_service_name))
