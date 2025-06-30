@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CarService extends Model
 {
     protected $fillable = [
         'book_service_id',
         'service_id',
+        'mechanic_id',
         'small_service_name',
         'big_service_name',
         'brakes_service_name',
@@ -37,4 +39,9 @@ class CarService extends Model
         'kilometers',
         'price',
     ];
+
+    public function mechanic(): BelongsTo
+    {
+        return $this->belongsTo(Mechanic::class);
+    }
 }

@@ -170,10 +170,7 @@ function sortOwner(field) {
 }
 
 function editOwner(owner) {
-    console.log(owner)
-
     router.push({name: 'app.owner.edit', params: {owner: owner}})
-
 }
 </script>
 

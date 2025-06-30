@@ -87,28 +87,28 @@ function onSubmit() {
                 response.data.errors.last_name = '';
             }
 
-            // First Name
+            // City
             if (response.data.errors.city) {
                 response.data.errors.city[0] = 'Grad je Obavezno polje!'
             } else {
                 response.data.errors.city = '';
             }
 
-            // First Name
+            // Address
             if (response.data.errors.address) {
                 response.data.errors.address[0] = 'Adresa je Obavezno polje!'
             } else {
                 response.data.errors.address = '';
             }
 
-            // First Name
+            // Phone
             if (response.data.errors.phone) {
                 response.data.errors.phone[0] = 'Telefon je Obavezno polje!'
             } else {
                 response.data.errors.phone = '';
             }
 
-            // First Name
+            // Email
             if (response.data.errors.email) {
                 response.data.errors.email[0] = 'Email je Obavezno polje!'
             } else {

@@ -11,6 +11,9 @@ use App\Http\Controllers\OrderController;
 // Open Pdf Invoice
 Route::get('export-pdf/{item}/{userId}', [\App\Http\Controllers\Api\PdfController::class, 'exportPdf']);
 
+// Show
+Route::get('auto-servis/{bookId}', [\App\Http\Controllers\Api\BookServiceController::class, 'showClientBookServices']);
+
 Route::middleware(['guestOrVerified'])->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('home');
     Route::get('/product/{product:slug}', [ProductController::class, 'view'])->name('product.view');

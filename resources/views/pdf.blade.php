@@ -9,6 +9,9 @@
 
 </head>
 <style>
+    body {
+        font-family: DejaVu Sans, sans-serif;
+    }
     .div-left{
         width: 50%;
         float:left;
@@ -25,7 +28,7 @@
     }
     .footer-container{
         width: 100%;
-        height: 90px;
+        height: 120px;
         padding-top:5px;
         border-bottom: 1px solid gray;
     }
@@ -577,6 +580,15 @@
         </div>
     @endif
 
+    @if($data['service']['mechanic'])
+        <div class="w-full middle-container small-service">
+            <b>Serviser:</b>
+
+            <div class="flex justify-between">
+                <span>{{ $data['service']['mechanic']->first_name . ' ' . $data['service']['mechanic']->last_name }}</span>
+            </div>
+        </div>
+    @endif
 
     @if($data['service']->description)
         <div class="w-full middle-container small-service">

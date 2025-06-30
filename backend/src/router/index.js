@@ -28,6 +28,7 @@ import BookService from "../views/BookService/BookService.vue";
 import CarServiceDetails from "../views/CarService/CarServiceDetails.vue";
 import EditOwner from "../views/Owner/EditOwner.vue";
 import TodayServiceDetails from "../views/CarService/TodayServiceDetails.vue";
+import EditCarService from "../views/CarService/EditCarService.vue";
 
 const routes = [
     {
@@ -132,6 +133,11 @@ const routes = [
                 path: 'createService/:book_id',
                 name: 'app.CreateService',
                 component: CreateService,
+            },
+            {
+                path: 'editService/:service',
+                name: 'app.service.edit',
+                component: EditCarService,
             },
             {
                 path: 'bookService',

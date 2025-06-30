@@ -30,27 +30,52 @@
                         Nazad
                     </router-link>
                 </footer>
-
             </form>
         </div>
+        <div class="bg-white px-4 pt-5 pb-4 py-2 mt-2">
+
+            <div class="flex items-center justify-between mb-3">
+                <h1 class="text-2xl font-semibold pb-2">{{ mechanic_title }}</h1>
+                <button type="button"
+                        @click="showAddNewModal()"
+                        class="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                >
+                    Novi Serviser
+                </button>
+            </div>
+        </div>
+        <MechanicModal v-model="showMechanicModal" :mechanic="mechanicModel" @close="onModalClose"/>
+        <MechanicTable ref="mechanicTable" @clickEdit="editMechanic" />
     </div>
 </template>
 
 <script setup>
 
 
-import {computed, onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 import store from "../../store/index.js";
 import {useRoute, useRouter} from "vue-router";
 import CustomInput from "../../components/core/CustomImput.vue";
+import MechanicModal from "../Mechanic/MechanicModal.vue";
+import MechanicTable from "../Mechanic/MechanicTable.vue";
 
 const router = useRouter();
 const route = useRoute()
 
 const title = ref('');
 const service_title = ref('');
+const mechanic_title = ref('');
 const loading = ref(false);
 const user = store.state.user.user.data;
+
+const mechanicTable = ref(null);
+
+const DEFAULT_MECHANIC = {
+    id: '',
+    first_name: '',
+    last_name: '',
+    phone: ''
+}
 
 const service = ref({
     id: '',
@@ -60,6 +85,13 @@ const service = ref({
     phone: '',
 });
 
+const mechanicModel = ref({...DEFAULT_MECHANIC})
+
+const showMechanicModal = ref(false);
+function showAddNewModal() {
+    showMechanicModal.value = true
+}
+
 function onSubmit() {
     loading.value = true;
 
@@ -67,8 +99,7 @@ function onSubmit() {
         store.dispatch('service/updateService', service.value)
             .then(response => {
                 if (response.status === 200) {
-                    // ToDo Notifications
-                    router.push({name: 'app.dashboard'})
+                    store.commit('toast/showToast', `Servis Izmijenjen!`)
                     store.dispatch('service/getServiceByServiceId', service.value.id)
                 }
             })
@@ -79,9 +110,8 @@ function onSubmit() {
     } else {
         store.dispatch('service/createService', service.value)
             .then(response => {
-                // ToDo Notifications
                 service.value = response.data
-                router.push({name: 'app.dashboard'})
+                store.commit('toast/showToast', `Servis Kreiran!`)
                 store.dispatch('service/getServiceByServiceId', response.data.id)
             })
             .catch(err => {
@@ -102,7 +132,25 @@ onMounted(() => {
 
     title.value = "Vlasnik Servisa";
     service_title.value = "Podaci Servisa";
+    mechanic_title.value = "Serviseri";
 })
+
+function onModalClose() {
+    mechanicModel.value = {...DEFAULT_MECHANIC}
+    if (mechanicTable.value) {
+        mechanicTable.value.refreshMechanics();
+    }
+}
+
+// Edit Mechanic
+
+function editMechanic(mechanic) {
+    store.dispatch('mechanic/getMechanic', mechanic)
+        .then(({data}) => {
+            mechanicModel.value = data
+            showAddNewModal();
+        })
+}
 
 </script>
 

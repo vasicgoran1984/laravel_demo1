@@ -78,19 +78,10 @@
                     <template v-if="!loading.countCarService">
                         <DoughnutChart :chart-data="countCarService" :options="options" css-classes="chart-container" />
                     </template>
-                    <Spinner v-else text="" class="" />
+<!--                    <Spinner v-else text="" class="" />-->
+                    Trenutno nemate servisa.
                 </div>
                 <!--/ Doughnut Chart -->
-
-                <!-- Bar Chart -->
-<!--                <div class="bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center">-->
-<!--                    <label class="text-lg font-semibold block mb-2">Po Danu</label>-->
-<!--                    <template v-if="!loading.countCarService">-->
-<!--                        <BarChart :chart-data="countCarService" :options="options" css-classes="chart-container" />-->
-<!--                    </template>-->
-<!--                    <Spinner v-else text="" class="" />-->
-<!--                </div>-->
-                <!--/ Bar Chart -->
             </div>
         </div>
     </div>
@@ -180,10 +171,11 @@ function updateDashboard() {
             chartData.datasets[0].data.push(c.count);
         })
 
-        console.log(chartData)
-
+        if (chartData.labels.length) {
+            loading.value.countCarService = false;
+        }
         countCarService.value = chartData;
-        loading.value.countCarService = false;
+
     })
 }
 

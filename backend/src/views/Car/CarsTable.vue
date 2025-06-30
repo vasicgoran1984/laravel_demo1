@@ -176,7 +176,6 @@ function sortCar(field) {
 }
 
 function editCar(car) {
-    console.log(car)
     showModal.value = true;
 }
 </script>
